@@ -12,7 +12,12 @@ const strings = {
   standardDetails: {
     standards: 'Standards',
   },
-  button: {},
+  button: {
+    register: 'Register',
+  },
+  studentRegistration: {
+    studentRegistration: 'Student Registration',
+  },
 };
 
 export default strings;

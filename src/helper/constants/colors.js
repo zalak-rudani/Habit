@@ -4,6 +4,8 @@ const colors = {
     buttonColor: '#445669',
     fontColor: '#252F3A',
   },
+  screenHead: '#28283C',
+  lightGray: '#989A9C',
   white: '#fff',
   black: '#000',
   gray: '#AFB5B9',

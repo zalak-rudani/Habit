@@ -9,8 +9,7 @@ const studentDataSlice = createSlice({
     addData(state, action) {
       console.log('state-=-=-=', state);
       console.log('action-=-=-=', action.payload);
-
-      state.studentData = [...state.studentData ,action.payload];
+      state.studentData = [...state.studentData, action.payload];
     },
   },
 });

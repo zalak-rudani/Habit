@@ -3,9 +3,14 @@ import React from 'react';
 import commonStyle from '../helper/constants/commonStyle';
 import icons from '../helper/constants/icons';
 import strings from '../helper/constants/strings';
-import {wp} from '../helper/globalFunc';
+import {hp, wp} from '../helper/globalFunc';
+import {FlatList} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
 
-const StandardDetails = () => {
+const StandardDetails = ({navigation}) => {
+  const stdDetails = useSelector(state => state?.studentDataSlice?.studentData);
+  // console.log('stdDETAILS*-*-*-*-*-*-*-*-*-', stdDetails);
+
   return (
     <View style={commonStyle.flex1}>
       <View
@@ -13,19 +18,42 @@ const StandardDetails = () => {
           ...commonStyle.directionRow,
           marginTop: 50,
         }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
             style={{...commonStyle.icon, marginHorizontal: wp(10)}}
             source={icons.left}
           />
         </TouchableOpacity>
-        <Text style={{...commonStyle.headText, flex: 1, textAlign: 'center'}}>
+        <Text
+          style={{
+            ...commonStyle.headText,
+            flex: 1,
+            textAlign: 'center',
+            marginBottom: hp(20),
+          }}>
           {strings.standardDetails.standards}
         </Text>
       </View>
+
+      <FlatList
+        numColumns={2}
+        horizontal={false}
+        data={stdDetails}
+        renderItem={item => {
+          return (
+            <View style={{flex: 1}}>
+              <TouchableOpacity style={commonStyle.stdDivCards}>
+                {console.log('IIITEM-*-*-*-*-*', item)}
+                <Text style={commonStyle.subHeadText}>{'Standard'}</Text>
+                <Text style={commonStyle.subHeadText}>{item?.index}</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }}
+      />
       <TouchableOpacity
         style={commonStyle.plus}
-        onPress={() => navigation.navigate('StudentRegister')}>
+        onPress={() => navigation.navigate('StudentRegistration')}>
         <Image style={commonStyle.icon50} source={icons.plus} />
       </TouchableOpacity>
     </View>

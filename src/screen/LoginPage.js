@@ -5,7 +5,7 @@ import commonStyle from '../helper/constants/commonStyle';
 import {wp} from '../helper/globalFunc';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
-import {addData} from '../redux/slice/studentDataSlice';
+import {addInfo} from '../redux/slice/studentDataSlice';
 
 const LoginPage = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ const LoginPage = ({navigation}) => {
       email,
       name,
     };
-    dispatch(addData(data));
+    dispatch(addInfo(data));
   };
   return (
     <View style={[commonStyle.flex1, commonStyle.centerView]}>

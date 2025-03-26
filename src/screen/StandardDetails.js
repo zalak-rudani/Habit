@@ -5,49 +5,53 @@ import icons from '../helper/constants/icons';
 import strings from '../helper/constants/strings';
 import {hp, wp} from '../helper/globalFunc';
 import {FlatList} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {removeData} from '../redux/slice/studentDataSlice';
+import HeaderComp from '../components/HeaderComp';
 
 const StandardDetails = ({navigation}) => {
   const stdDetails = useSelector(state => state?.studentDataSlice?.studentData);
-  // console.log('stdDETAILS*-*-*-*-*-*-*-*-*-', stdDetails);
+  console.log('stdDETAILS*-*-*-*-*-*-*-*-*-', stdDetails);
+
+  const dispatch = useDispatch();
+
+  const deleteData = item => {
+    dispatch(removeData(item));
+  };
 
   return (
     <View style={commonStyle.flex1}>
-      <View
-        style={{
-          ...commonStyle.directionRow,
-          marginTop: 50,
-        }}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            style={{...commonStyle.icon, marginHorizontal: wp(10)}}
-            source={icons.left}
-          />
-        </TouchableOpacity>
-        <Text
-          style={{
-            ...commonStyle.headText,
-            flex: 1,
-            textAlign: 'center',
-            marginBottom: hp(20),
-          }}>
-          {strings.standardDetails.standards}
-        </Text>
-      </View>
+      <HeaderComp
+        text={strings.standardDetails.standards}
+        onPress={() => navigation.goBack()}
+      />
 
       <FlatList
         numColumns={2}
         horizontal={false}
         data={stdDetails}
-        renderItem={item => {
+        renderItem={({item, index}) => {
           return (
-            <View style={{flex: 1}}>
-              <TouchableOpacity style={commonStyle.stdDivCards}>
-                {console.log('IIITEM-*-*-*-*-*', item)}
-                <Text style={commonStyle.subHeadText}>{'Standard'}</Text>
-                <Text style={commonStyle.subHeadText}>{item?.index}</Text>
+            // <View style={{flex: 1}}>
+            <TouchableOpacity
+              style={commonStyle.stdDivCards}
+              onPress={() =>
+                navigation.navigate('StudentsCards', {id: item?.id})
+              }>
+              {console.log('item-*-*-*-*-*', item)}
+              {console.log('item====*-*-*', item?.email)}
+              <Text style={commonStyle.subHeadText}>{item?.std}</Text>
+              {/* <Text style={commonStyle.subHeadText}>{'Standard'}</Text>
+                <Text style={commonStyle.subHeadText}>{index}</Text> */}
+              <Text style={{...commonStyle.text}}>
+                {strings.standardDetails.numOfStu}
+              </Text>
+              <TouchableOpacity onPress={() => deleteData(item?.id)}>
+                <Text style={commonStyle.subHeadText}>{'DELETE'}</Text>
               </TouchableOpacity>
-            </View>
+              {/* <Text style={commonStyle.text}>{'()'}</Text> */}
+            </TouchableOpacity>
+            // </View>
           );
         }}
       />

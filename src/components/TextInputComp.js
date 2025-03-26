@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, TextInput, View} from 'react-native';
+import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 
 import commonStyle from '../helper/constants/commonStyle';
 import {hp} from '../helper/globalFunc';
@@ -33,23 +33,23 @@ const TextInputComp = ({
         }}>
         {text}
       </Text>
-
-      <TextInput
-        ref={ref}
-        value={value}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        onPress={onPress}
-        multiline={multiline}
-        autoFocus={autoFocus}
-        maxLength={maxLength}
-        placeholder={placeholder}
-        onChangeText={onChangeText}
-        keyboardType={keyboardType}
-        style={commonStyle.textInput}
-        returnKeyType={returnKeyType}
-        onSubmitEditing={onSubmitEditing}
-      />
+      <TouchableOpacity onPress={onPress}>
+        <TextInput
+          ref={ref}
+          value={value}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          multiline={multiline}
+          autoFocus={autoFocus}
+          maxLength={maxLength}
+          placeholder={placeholder}
+          onChangeText={onChangeText}
+          keyboardType={keyboardType}
+          style={commonStyle.textInput}
+          returnKeyType={returnKeyType}
+          onSubmitEditing={onSubmitEditing}
+        />
+      </TouchableOpacity>
 
       {{error} ? <Text style={commonStyle.error}>{error}</Text> : null}
     </View>

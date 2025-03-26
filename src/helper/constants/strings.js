@@ -11,12 +11,16 @@ const strings = {
   },
   standardDetails: {
     standards: 'Standards',
+    numOfStu: 'TOTAL STUDENTS',
   },
   button: {
     register: 'Register',
   },
   studentRegistration: {
     studentRegistration: 'Student Registration',
+  },
+  studentsCards: {
+    studentsList: 'Students List',
   },
 };
 

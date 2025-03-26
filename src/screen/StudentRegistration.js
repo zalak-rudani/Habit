@@ -17,8 +17,13 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
 import {addData} from '../redux/slice/studentDataSlice';
+import ModalComp from '../components/ModalComp';
+import ButtonComp from '../components/ButtonComp';
+import HeaderComp from '../components/HeaderComp';
 
 const StudentRegistration = ({navigation}) => {
+  const [name, setName] = useState('');
+  const [nameEr, setNameEr] = useState('');
   const [fatherName, setFatherName] = useState('');
   const [fatherNameEr, setFatherNameEr] = useState('');
   const [motherNameEr, setMotherNameEr] = useState('');
@@ -27,6 +32,13 @@ const StudentRegistration = ({navigation}) => {
   const [ageEr, setAgeEr] = useState('');
   const [std, setStd] = useState('');
   const [stdEr, setStdEr] = useState('');
+  const [stdModalVisible, setStdModalVisible] = useState(false);
+  const [divModalVisible, setDivModalVisible] = useState(false);
+  const [gender, setGender] = useState('');
+  const [genderEr, setGenderEr] = useState('');
+  const [genderModalVisible, setGenderModalVisible] = useState(false);
+  const [rollNo, setRollNo] = useState('');
+  const [rollNoEr, setRollNoEr] = useState('');
   const [div, setDiv] = useState('');
   const [divEr, setDivEr] = useState('');
   const [phoneNo, setPhoneNo] = useState('');
@@ -38,6 +50,31 @@ const StudentRegistration = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [emailEr, setEmailEr] = useState('');
 
+  const division = [
+    {
+      title: 'A',
+      onPress: () => {
+        setDiv('A');
+        setDivModalVisible(false);
+      },
+    },
+    {
+      title: 'B',
+      onPress: () => {
+        setDiv('B');
+        setDivModalVisible(false);
+      },
+    },
+    {
+      title: 'C',
+      onPress: () => {
+        setDiv('C');
+        setDivModalVisible(false);
+      },
+    },
+  ];
+
+  const fatherNameRef = useRef();
   const motherNameRef = useRef();
   const ageRef = useRef();
   const stdRef = useRef();
@@ -46,12 +83,17 @@ const StudentRegistration = ({navigation}) => {
   const phoneNoRef = useRef();
   const heightRef = useRef();
   const weightRef = useRef();
+  const genderRef = useRef();
+  const rollNoRef = useRef();
 
   const dispatch = useDispatch();
 
   const getData = () => {
     const newData = {
       id: uuid.v4(),
+      name,
+      gender,
+      rollNo,
       fatherName,
       motherName,
       age,
@@ -123,23 +165,26 @@ const StudentRegistration = ({navigation}) => {
   };
   return (
     <View style={commonStyle.flex1}>
-      <View
-        style={{
-          ...commonStyle.directionRow,
-          marginVertical: hp(35),
-        }}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            style={{...commonStyle.icon, marginHorizontal: wp(10)}}
-            source={icons.left}
-          />
-        </TouchableOpacity>
-        <Text style={{...commonStyle.headText, flex: 1, textAlign: 'center'}}>
-          {strings.studentRegistration.studentRegistration}
-        </Text>
-      </View>
+      <HeaderComp
+        text={strings.studentRegistration.studentRegistration}
+        onPress={() => navigation.goBack()}
+      />
+
       <KeyboardAwareScrollView contentContainerStyle={{paddingBottom: 100}}>
         <ScrollView style={{marginHorizontal: wp(15)}}>
+          <TextInputComp
+            text={'Name'}
+            value={name}
+            onChangeText={text => setName(text)}
+            error={nameEr}
+            onSubmitEditing={() => {
+              // stringValidation(name, setNameEr, 'Name');
+              fatherNameRef.current?.focus();
+            }}
+            // onBlur={() => stringValidation(name, setNameEr, 'Name')}
+            autoFocus={true}
+            returnKeyType={'next'}
+          />
           <TextInputComp
             text={'Father Name'}
             value={fatherName}
@@ -150,7 +195,7 @@ const StudentRegistration = ({navigation}) => {
               motherNameRef.current?.focus();
             }}
             // onBlur={() => stringValidation(fatherName, setFatherNameEr, 'Father name')}
-            autoFocus={true}
+            ref={fatherNameRef}
             returnKeyType={'next'}
           />
           <TextInputComp
@@ -169,6 +214,7 @@ const StudentRegistration = ({navigation}) => {
           <TextInputComp
             text={'Phone no.'}
             value={phoneNo}
+            maxLength={10}
             onChangeText={text => setPhoneNo(text)}
             error={phoneNoEr}
             onSubmitEditing={() => {
@@ -186,12 +232,41 @@ const StudentRegistration = ({navigation}) => {
             error={emailEr}
             onSubmitEditing={() => {
               // stringValidation(email, setEmailEr, 'Email');
-              stdRef.current?.focus();
+              genderRef.current?.focus();
             }}
             // onBlur={() =>    stringValidation(email, setEmailEr, 'Email')}
             ref={emailRef}
             returnKeyType={'next'}
           />
+          <TextInputComp
+            text={'Gender'}
+            value={gender}
+            onChangeText={text => setGender(text)}
+            error={genderEr}
+            onSubmitEditing={() => {
+              // stringValidation(gender, setGenderEr, 'Gender');
+              rollNoRef.current?.focus();
+            }}
+            // onBlur={() =>  stringValidation(gender, setGenderEr, 'Gender')}
+            ref={genderRef}
+            returnKeyType={'next'}
+          />
+
+          <TextInputComp
+            text={'Roll no.'}
+            value={rollNo}
+            maxLength={5}
+            onChangeText={text => setRollNo(text)}
+            error={rollNoEr}
+            onSubmitEditing={() => {
+              // stringValidation(rollNo, setRollNoEr, 'Roll no.');
+              stdRef.current?.focus();
+            }}
+            // onBlur={() =>   stringValidation(rollNo, setRollNoEr, 'Roll no.')}
+            ref={rollNoRef}
+            returnKeyType={'next'}
+          />
+
           <TextInputComp
             text={'Std'}
             value={std}
@@ -208,6 +283,7 @@ const StudentRegistration = ({navigation}) => {
           <TextInputComp
             text={'Division'}
             value={div}
+            onPress={() => setDivModalVisible(true)}
             onChangeText={text => setDiv(text)}
             error={divEr}
             onSubmitEditing={() => {
@@ -221,6 +297,7 @@ const StudentRegistration = ({navigation}) => {
           <TextInputComp
             text={'Age'}
             value={age}
+            maxLength={2}
             onChangeText={text => setAge(text)}
             error={ageEr}
             onSubmitEditing={() => {
@@ -265,23 +342,19 @@ const StudentRegistration = ({navigation}) => {
           position: 'absolute',
           bottom: hp(20),
         }}>
-        <TouchableOpacity
+        <ButtonComp
           onPress={() => {
             getData(), navigation.navigate('StandardDetails');
           }}
-          style={{
-            backgroundColor: colors.primary.buttonColor,
-            height: hp(44),
-            width: wp(150),
-            borderRadius: 7,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text style={{...commonStyle.text, color: colors.white}}>
-            {strings.button.register}
-          </Text>
-        </TouchableOpacity>
+          text={strings.button.register}
+        />
       </View>
+
+      <ModalComp
+        data={division}
+        visible={divModalVisible}
+        onPress={() => setDivModalVisible(false)}
+      />
     </View>
   );
 };

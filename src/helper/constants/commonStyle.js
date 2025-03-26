@@ -23,7 +23,7 @@ const commonStyle = StyleSheet.create({
   },
 
   text: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     fontFamily: fonts.metrophobic_regular,
     color: colors.primary.fontColor,
@@ -78,11 +78,24 @@ const commonStyle = StyleSheet.create({
   },
   stdDivCards: {
     flex: 1,
+    padding: 15,
     backgroundColor: colors.white,
-    margin: 10,
+    margin: hp(10),
     borderRadius: 5,
     height: hp(150),
+    alignItems: 'center',
     // width: wp(50),
+  },
+
+  studentCard: {
+    flex: 1,
+    backgroundColor: colors.white,
+    borderLeftWidth: 6,
+    marginHorizontal: wp(25),
+    marginVertical: hp(10),
+    borderRadius: 12,
+    height: hp(150),
+    padding: 15,
   },
 });
 

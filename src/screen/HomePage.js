@@ -19,7 +19,8 @@ import commonStyle from '../helper/constants/commonStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomePage = ({navigation}) => {
-  const userData = useSelector(state => state.studentDataSlice.studentData);
+  const userData = useSelector(state => state?.studentDataSlice?.studentInfo);
+  console.log('studentINFO-=-=-=-=-=', userData);
 
   // const data = AsyncStorage.getItem('userData');
   // console.log('Dataaaa-=-=-=-=', data?.name);
@@ -38,7 +39,7 @@ const HomePage = ({navigation}) => {
             {...commonStyle.subHeadText, color: colors.primary.fontColor},
             commonStyle.margin10,
           ]}>
-          {userData[0]?.name}
+          {userData?.name}
         </Text>
         <View style={styles.searchView}>
           <Image style={styles.icon} source={icons.search} />

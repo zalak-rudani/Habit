@@ -13,29 +13,33 @@ import StudentRegistration from '../screen/StudentRegistration';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ActivityIndicator, View} from 'react-native';
 import LandingScreen from '../screen/LandingScreen';
+import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
 
 const navigationRef = createRef();
 
 const RootNavigator = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const userData = useSelector(state => state?.studentDataSlice?.studentInfo);
+  console.log('userData*****************-=-=-=-', userData);
+
+  const getData = () => {
+    if (userData) {
+      setIsLoading(false);
+      setIsLoggedIn(true);
+      return true;
+    } else {
+      setIsLoading(false);
+      return false;
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
-
-  const getData = async () => {
-    const userData = JSON.parse(await AsyncStorage.getItem('userData'));
-    console.log('userdata-=-=-=-*******=', userData);
-    if (userData.email && userData.name) {
-      return true;
-      setIsLoading(false);
-    } else {
-      return false;
-      setIsLoading(false);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -47,43 +51,58 @@ const RootNavigator = () => {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      {getData() ? (
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen
-            options={{animation: 'fade'}}
-            name={'HomePage'}
-            component={HomePage}
-          />
-          <Stack.Screen name={'DivisionDetails'} component={DivisionDetails} />
-          <Stack.Screen name={'StandardDetails'} component={StandardDetails} />
-          <Stack.Screen name={'StudentDetails'} component={StudentDetails} />
-          <Stack.Screen name={'StudentsCards'} component={StudentsCards} />
-          <Stack.Screen
-            name={'StudentRegistration'}
-            component={StudentRegistration}
-          />
-          <Stack.Screen
-            options={{animation: 'fade'}}
-            name={'LoginPage'}
-            component={LoginPage}
-          />
-        </Stack.Navigator>
-      ) : (
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen
-            options={{animation: 'fade'}}
-            name={'LoginPage'}
-            component={LoginPage}
-          />
-          <Stack.Screen
-            options={{animation: 'fade'}}
-            name={'HomePage'}
-            component={HomePage}
-          />
-        </Stack.Navigator>
-      )}
+      <Stack.Navigator
+        screenOptions={{headerShown: false}}
+        initialRouteName={isLoggedIn ? 'HomePage' : 'LoginPage'}>
+        <Stack.Screen
+          options={{animation: 'fade'}}
+          name={'LoginPage'}
+          component={LoginPage}
+        />
+        <Stack.Screen
+          options={{animation: 'fade'}}
+          name={'HomePage'}
+          component={HomePage}
+        />
+        <Stack.Screen name={'DivisionDetails'} component={DivisionDetails} />
+        <Stack.Screen name={'StandardDetails'} component={StandardDetails} />
+        <Stack.Screen name={'StudentDetails'} component={StudentDetails} />
+        <Stack.Screen name={'StudentsCards'} component={StudentsCards} />
+        <Stack.Screen
+          name={'StudentRegistration'}
+          component={StudentRegistration}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 export default RootNavigator;
+
+// <NavigationContainer ref={navigationRef}>
+// {getData() ? (
+//   <Stack.Navigator screenOptions={{headerShown: false}}>
+//     <Stack.Screen
+//       options={{animation: 'fade'}}
+//       name={'HomePage'}
+//       component={HomePage}
+//     />
+//     <Stack.Screen name={'DivisionDetails'} component={DivisionDetails} />
+//     <Stack.Screen name={'StandardDetails'} component={StandardDetails} />
+//     <Stack.Screen name={'StudentDetails'} component={StudentDetails} />
+//     <Stack.Screen name={'StudentsCards'} component={StudentsCards} />
+//     <Stack.Screen
+//       name={'StudentRegistration'}
+//       component={StudentRegistration}
+//     />
+//   </Stack.Navigator>
+// ) : (
+//   <Stack.Navigator screenOptions={{headerShown: false}}>
+//     <Stack.Screen
+//       options={{animation: 'fade'}}
+//       name={'LoginPage'}
+//       component={LoginPage}
+//     />
+//   </Stack.Navigator>
+// )}
+// </NavigationContainer>

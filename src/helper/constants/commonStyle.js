@@ -69,9 +69,8 @@ const commonStyle = StyleSheet.create({
 
   textInput: {
     fontSize: 16,
-    borderBottomWidth: 1,
     fontWeight: '400',
-    borderColor: colors.lightGray,
+    flex: 1,
     paddingVertical: 15,
     fontFamily: fonts.metrophobic_regular,
     color: colors.primary.fontColor,

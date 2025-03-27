@@ -1,25 +1,28 @@
+import React, {useRef, useState} from 'react';
 import {
   Image,
+  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
-import commonStyle from '../helper/constants/commonStyle';
-import TextInputComp from '../components/TextInputComp';
-import {hp, wp} from '../helper/globalFunc';
-import icons from '../helper/constants/icons';
-import strings from '../helper/constants/strings';
-import colors from '../helper/constants/colors';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
-import {addData} from '../redux/slice/studentDataSlice';
+import {hp, wp} from '../helper/globalFunc';
+import icons from '../helper/constants/icons';
+import colors from '../helper/constants/colors';
 import ModalComp from '../components/ModalComp';
+import strings from '../helper/constants/strings';
 import ButtonComp from '../components/ButtonComp';
 import HeaderComp from '../components/HeaderComp';
+import {addData} from '../redux/slice/studentDataSlice';
+import TextInputComp from '../components/TextInputComp';
+import commonStyle from '../helper/constants/commonStyle';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const StudentRegistration = ({navigation}) => {
   const [name, setName] = useState('');
@@ -70,6 +73,124 @@ const StudentRegistration = ({navigation}) => {
       onPress: () => {
         setDiv('C');
         setDivModalVisible(false);
+      },
+    },
+  ];
+
+  const standards = [
+    {
+      title: 'LKG',
+      onPress: () => {
+        setStd('LKG');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: 'SKG',
+      onPress: () => {
+        setStd('SKG');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '1st',
+      onPress: () => {
+        setStd('1st');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '2nd',
+      onPress: () => {
+        setStd('2nd');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '3rd',
+      onPress: () => {
+        setStd('3rd');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '4th',
+      onPress: () => {
+        setStd('4th');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '5th',
+      onPress: () => {
+        setStd('5th');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '6th',
+      onPress: () => {
+        setStd('6th');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '7th',
+      onPress: () => {
+        setStd('7th');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '8th',
+      onPress: () => {
+        setStd('8th');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '9th',
+      onPress: () => {
+        setStd('9th');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '10th',
+      onPress: () => {
+        setStd('10th');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '11th',
+      onPress: () => {
+        setStd('11th');
+        setStdModalVisible(false);
+      },
+    },
+    {
+      title: '12th',
+      onPress: () => {
+        setStd('12th');
+        setStdModalVisible(false);
+      },
+    },
+  ];
+
+  const genderData = [
+    {
+      title: 'Girl',
+      onPress: () => {
+        setGender('Girl');
+        setGenderModalVisible(false);
+      },
+    },
+    {
+      title: 'Boy',
+      onPress: () => {
+        setGender('Boy');
+        setGenderModalVisible(false);
       },
     },
   ];
@@ -241,8 +362,11 @@ const StudentRegistration = ({navigation}) => {
           <TextInputComp
             text={'Gender'}
             value={gender}
+            onFocus={Keyboard.dismiss}
             onChangeText={text => setGender(text)}
             error={genderEr}
+            source={icons.down}
+            onPress={() => setGenderModalVisible(true)}
             onSubmitEditing={() => {
               // stringValidation(gender, setGenderEr, 'Gender');
               rollNoRef.current?.focus();
@@ -267,22 +391,30 @@ const StudentRegistration = ({navigation}) => {
             returnKeyType={'next'}
           />
 
+          {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
           <TextInputComp
             text={'Std'}
             value={std}
             onChangeText={text => setStd(text)}
             error={stdEr}
+            source={icons.down}
+            onPress={() => setStdModalVisible(true)}
             onSubmitEditing={() => {
               // stringValidation(std, setStdEr, 'Std');
               divRef.current?.focus();
             }}
             // onBlur={() =>      stringValidation(std, setStdEr, 'Std')}
             ref={stdRef}
+            onFocus={Keyboard.dismiss}
             returnKeyType={'next'}
           />
+          {/* </TouchableWithoutFeedback> */}
+          {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
           <TextInputComp
             text={'Division'}
             value={div}
+            source={icons.down}
+            onFocus={Keyboard.dismiss}
             onPress={() => setDivModalVisible(true)}
             onChangeText={text => setDiv(text)}
             error={divEr}
@@ -294,6 +426,7 @@ const StudentRegistration = ({navigation}) => {
             ref={divRef}
             returnKeyType={'next'}
           />
+          {/* </TouchableWithoutFeedback> */}
           <TextInputComp
             text={'Age'}
             value={age}
@@ -354,6 +487,17 @@ const StudentRegistration = ({navigation}) => {
         data={division}
         visible={divModalVisible}
         onPress={() => setDivModalVisible(false)}
+      />
+
+      <ModalComp
+        data={genderData}
+        visible={genderModalVisible}
+        onPress={() => setGenderModalVisible(false)}
+      />
+      <ModalComp
+        data={standards}
+        visible={stdModalVisible}
+        onPress={() => setStdModalVisible(false)}
       />
     </View>
   );

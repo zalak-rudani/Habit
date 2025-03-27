@@ -8,6 +8,7 @@ const icons = {
   girl: require('../../../assets/icons/girl.png'),
   numbers: require('../../../assets/icons/numbers.png'),
   phone: require('../../../assets/icons/phone.png'),
+  down: require('../../../assets/icons/down.png'),
   id: require('../../../assets/icons/id.svg'),
 };
 

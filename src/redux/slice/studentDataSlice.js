@@ -11,7 +11,7 @@ const studentDataSlice = createSlice({
     addInfo(state, action) {
       console.log('state-=-=-=', state);
       console.log('action-=-=-=', action?.payload);
-      state.studentInfo = {...action?.payload};
+      state.studentInfo = action?.payload;
       console.log('state.studentInfo-=-=-=', state.studentInfo);
     },
     addData(state, action) {

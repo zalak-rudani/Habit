@@ -19,6 +19,63 @@ const StandardDetails = ({navigation}) => {
     dispatch(removeData(item));
   };
 
+  // const count = stdDetails?.filter((ele) => {
+  //   if (ele.std === standard.title) {
+  //
+  //   }
+  // });
+
+  const standard = [
+    {
+      title: 'LKG',
+      // count: count(title),
+    },
+    {
+      title: 'SKG',
+    },
+    {
+      title: '1st',
+    },
+    {
+      title: '2nd',
+    },
+    {
+      title: '3rd',
+    },
+    {
+      title: '4th',
+    },
+    {
+      title: '5th',
+    },
+    {
+      title: '6th',
+    },
+    {
+      title: '7th',
+    },
+    {
+      title: '8th',
+    },
+    {
+      title: '9th',
+    },
+    {
+      title: '10th',
+    },
+    {
+      title: '11th',
+    },
+    {
+      title: '12th',
+    },
+  ];
+
+  const standards = standard.map(item => {
+    const data = stdDetails.filter(items => items?.std == item?.title);
+    return {...item, count: data.length};
+  });
+
   return (
     <View style={commonStyle.flex1}>
       <HeaderComp
@@ -29,27 +86,19 @@ const StandardDetails = ({navigation}) => {
       <FlatList
         numColumns={2}
         horizontal={false}
-        data={stdDetails}
+        data={standards}
         renderItem={({item, index}) => {
           return (
             // <View style={{flex: 1}}>
             <TouchableOpacity
               style={commonStyle.stdDivCards}
               onPress={() =>
-                navigation.navigate('StudentsCards', {id: item?.id})
+                navigation.navigate('DivisionDetails', {std: item?.title})
               }>
               {console.log('item-*-*-*-*-*', item)}
               {console.log('item====*-*-*', item?.email)}
-              <Text style={commonStyle.subHeadText}>{item?.std}</Text>
-              {/* <Text style={commonStyle.subHeadText}>{'Standard'}</Text>
-                <Text style={commonStyle.subHeadText}>{index}</Text> */}
-              <Text style={{...commonStyle.text}}>
-                {strings.standardDetails.numOfStu}
-              </Text>
-              <TouchableOpacity onPress={() => deleteData(item?.id)}>
-                <Text style={commonStyle.subHeadText}>{'DELETE'}</Text>
-              </TouchableOpacity>
-              {/* <Text style={commonStyle.text}>{'()'}</Text> */}
+              <Text style={commonStyle.subHeadText}>{item?.title}</Text>
+              <Text style={commonStyle.subHeadText}>{item?.count}</Text>
             </TouchableOpacity>
             // </View>
           );
@@ -145,3 +194,7 @@ const styles = StyleSheet.create({});
 //   );
 // }}
 // />
+
+{
+  /* <Text style={commonStyle.subHeadText}>{'DELETE'}</Text> */
+}

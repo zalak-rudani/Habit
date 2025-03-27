@@ -20,7 +20,11 @@ const strings = {
     studentRegistration: 'Student Registration',
   },
   studentsCards: {
-    studentsList: 'Students List',
+    standard: 'Standard',
+    division: 'Division',
+  },
+  divisionDetails: {
+    standard: 'Standard',
   },
 };
 

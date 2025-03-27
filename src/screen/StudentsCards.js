@@ -15,20 +15,30 @@ import {useSelector} from 'react-redux';
 import colors from '../helper/constants/colors';
 import HeaderComp from '../components/HeaderComp';
 
-const StudentsCards = ({navigation}) => {
+const StudentsCards = ({navigation, route}) => {
+  const standard = route?.params?.std;
+  const division = route?.params?.div;
+
   const studentData = useSelector(
     state => state?.studentDataSlice?.studentData,
   );
-  console.log('state-=-=-=-=', studentData);
+
+  const sameStdDivStudents = studentData?.filter(element => {
+    if (element?.std === standard && element?.div === division) {
+      return element;
+    }
+  });
+
+  console.log('sameStdDivStudents-=-=-=-=-=', sameStdDivStudents);
 
   return (
     <View style={commonStyle.flex1}>
       <HeaderComp
-        text={strings.studentsCards.studentsList}
+        text={`${standard}-${division}`}
         onPress={() => navigation.goBack()}
       />
       <FlatList
-        data={studentData}
+        data={sameStdDivStudents}
         renderItem={({item}) => {
           return (
             <TouchableOpacity
@@ -85,5 +95,3 @@ const StudentsCards = ({navigation}) => {
 };
 
 export default StudentsCards;
-
-const styles = StyleSheet.create({});

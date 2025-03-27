@@ -1,9 +1,16 @@
 import React from 'react';
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 
-import commonStyle from '../helper/constants/commonStyle';
 import {hp} from '../helper/globalFunc';
 import colors from '../helper/constants/colors';
+import commonStyle from '../helper/constants/commonStyle';
 
 const TextInputComp = ({
   ref,
@@ -11,6 +18,7 @@ const TextInputComp = ({
   value,
   error,
   onBlur,
+  source,
   onPress,
   onFocus,
   autoFocus,
@@ -33,7 +41,7 @@ const TextInputComp = ({
         }}>
         {text}
       </Text>
-      <TouchableOpacity onPress={onPress}>
+      <View style={styles.textInputView}>
         <TextInput
           ref={ref}
           value={value}
@@ -49,11 +57,23 @@ const TextInputComp = ({
           returnKeyType={returnKeyType}
           onSubmitEditing={onSubmitEditing}
         />
-      </TouchableOpacity>
-
+        <TouchableOpacity onPress={onPress}>
+          <Image source={source} style={commonStyle.icon} />
+        </TouchableOpacity>
+      </View>
       {{error} ? <Text style={commonStyle.error}>{error}</Text> : null}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  textInputView: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: colors.lightGray,
+  },
+});
 
 export default TextInputComp;

@@ -26,6 +26,9 @@ const strings = {
   divisionDetails: {
     standard: 'Standard',
   },
+  studentDetails: {
+    studentDetails: 'Student Details',
+  },
 };
 
 export default strings;

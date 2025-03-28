@@ -4,6 +4,7 @@ const studentDataSlice = createSlice({
   name: 'studentDataSlice',
   initialState: {
     studentInfo: {},
+    studentDetails: {},
     studentData: [],
     value: 0,
   },
@@ -13,6 +14,12 @@ const studentDataSlice = createSlice({
       console.log('action-=-=-=', action?.payload);
       state.studentInfo = action?.payload;
       console.log('state.studentInfo-=-=-=', state.studentInfo);
+    },
+    addDetails(state, action) {
+      console.log('state-=-=-=', state);
+      console.log('action-=-=-=', action?.payload);
+      state.studentDetails = action?.payload;
+      console.log('state.studentInfo-=-=-=', state.studentDetails);
     },
     addData(state, action) {
       console.log('state-=-=-=', state);
@@ -33,5 +40,5 @@ const studentDataSlice = createSlice({
 });
 
 export default studentDataSlice.reducer;
-export const {addInfo, addData, increment, removeData} =
+export const {addInfo, addData, increment, addDetails, removeData} =
   studentDataSlice.actions;

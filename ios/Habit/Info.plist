@@ -50,6 +50,13 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Metrophobic-Regular.ttf</string>
+		<string>Metropolis-Black.ttf</string>
+		<string>Metropolis-Bold.ttf</string>
+		<string>Metropolis-ExtraBold.ttf</string>
+		<string>Metropolis-Medium.ttf</string>
+		<string>Metropolis-Regular.ttf</string>
+		<string>Metropolis-SemiBold.ttf</string>
+		<string>Metropolis-Thin.ttf</string>
 	</array>
 </dict>
 </plist>

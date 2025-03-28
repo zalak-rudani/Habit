@@ -19,16 +19,9 @@ const StandardDetails = ({navigation}) => {
     dispatch(removeData(item));
   };
 
-  // const count = stdDetails?.filter((ele) => {
-  //   if (ele.std === standard.title) {
-  //
-  //   }
-  // });
-
-  const standard = [
+  const standards = [
     {
       title: 'LKG',
-      // count: count(title),
     },
     {
       title: 'SKG',
@@ -71,10 +64,14 @@ const StandardDetails = ({navigation}) => {
     },
   ];
 
-  const standards = standard.map(item => {
-    const data = stdDetails.filter(items => items?.std == item?.title);
-    return {...item, count: data.length};
+  const standard = standards.map(item => {
+    const sameStdStudent = stdDetails.filter(
+      items => items?.std == item?.title,
+    );
+    return {...item, count: sameStdStudent?.length};
   });
+
+  console.log('STDANDARD-=-=-=-=-', standards);
 
   return (
     <View style={commonStyle.flex1}>
@@ -86,7 +83,7 @@ const StandardDetails = ({navigation}) => {
       <FlatList
         numColumns={2}
         horizontal={false}
-        data={standards}
+        data={standard}
         renderItem={({item, index}) => {
           return (
             // <View style={{flex: 1}}>
@@ -96,9 +93,11 @@ const StandardDetails = ({navigation}) => {
                 navigation.navigate('DivisionDetails', {std: item?.title})
               }>
               {console.log('item-*-*-*-*-*', item)}
-              {console.log('item====*-*-*', item?.email)}
-              <Text style={commonStyle.subHeadText}>{item?.title}</Text>
-              <Text style={commonStyle.subHeadText}>{item?.count}</Text>
+
+              <Text style={{...commonStyle.subHeadText, paddingBottom: 15}}>
+                {item?.title}
+              </Text>
+              <Text style={commonStyle.subHeadText}>{`(${item?.count})`}</Text>
             </TouchableOpacity>
             // </View>
           );
@@ -116,85 +115,3 @@ const StandardDetails = ({navigation}) => {
 export default StandardDetails;
 
 const styles = StyleSheet.create({});
-
-// <FlatList
-// style={{flex: 1}}
-// data={studentData}
-// renderItem={({item, index}) => {
-//   return (
-//     <TouchableOpacity
-//       style={commonStyle.card}
-//       onPress={() =>
-//         navigation.navigate('StudentDetails', {id: item?.id})
-//       }>
-//       <View
-//         style={{
-//           // flexDirection: 'row',
-
-//           padding: 5,
-//         }}>
-//         <View style={{flex: 1}}>
-//           <Text style={commonStyle.textHead}>
-//             Name :
-//             <Text style={commonStyle.textValue}>
-//               {' '}
-//               {`${item?.fName} ${item?.mName} ${item?.lName}`}{' '}
-//             </Text>
-//           </Text>
-//           <Text style={commonStyle.textHead}>
-//             Enrollment No :
-//             <Text style={commonStyle.textValue}>
-//               {item?.enrollNum}
-//             </Text>
-//           </Text>
-//           <Text style={commonStyle.textHead}>
-//             Gender :
-//             <Text style={commonStyle.textValue}> {item?.gender}</Text>
-//           </Text>
-//           <Text style={commonStyle.textHead}>
-//             Mobile NO :
-//             <Text style={commonStyle.textValue}>
-//               {item?.mobileNo}{' '}
-//             </Text>
-//           </Text>
-//         </View>
-
-//         <View
-//           style={{
-//             flexDirection: 'row',
-//             justifyContent: 'flex-end',
-//             // alignItems: 'flex-end',
-//           }}>
-//           <TouchableOpacity
-//             onPress={() => {
-//               // updateData(item);
-//               navigation.navigate('StudentRegister', {
-//                 updateData: item,
-//               });
-//             }}>
-//             <Image style={commonStyle.miniIcon} source={icons.edit} />
-//           </TouchableOpacity>
-//           <TouchableOpacity
-//             onPress={() =>
-//               Alert.alert('Delete', 'Are you sure?', [
-//                 {
-//                   text: 'Cancel',
-//                 },
-//                 {text: 'OK', onPress: () => removeData(item?.id)},
-//               ])
-//             }>
-//             <Image
-//               style={commonStyle.miniIcon}
-//               source={icons.delete}
-//             />
-//           </TouchableOpacity>
-//         </View>
-//       </View>
-//     </TouchableOpacity>
-//   );
-// }}
-// />
-
-{
-  /* <Text style={commonStyle.subHeadText}>{'DELETE'}</Text> */
-}

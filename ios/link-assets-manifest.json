@@ -4,6 +4,34 @@
     {
       "path": "assets/fonts/Metrophobic-Regular.ttf",
       "sha1": "8ee1a9428a57a39bdaa02f8d41bb4e569feeedc5"
+    },
+    {
+      "path": "assets/fonts/Metropolis-Black.ttf",
+      "sha1": "10906b45ccf43cfad3a72d8c351b3c574d4c615b"
+    },
+    {
+      "path": "assets/fonts/Metropolis-Bold.ttf",
+      "sha1": "f086af17eb368b0872471d2da38faf2a88154bc2"
+    },
+    {
+      "path": "assets/fonts/Metropolis-ExtraBold.ttf",
+      "sha1": "6d407b40160ec10e3e1ce4931165781c40112221"
+    },
+    {
+      "path": "assets/fonts/Metropolis-Medium.ttf",
+      "sha1": "691fd8b681d65baab2238028aa74253487272860"
+    },
+    {
+      "path": "assets/fonts/Metropolis-Regular.ttf",
+      "sha1": "1e7d093a9fa8629b1823bdf5b32c90ff3bac8641"
+    },
+    {
+      "path": "assets/fonts/Metropolis-SemiBold.ttf",
+      "sha1": "1749049315e48626d2fcad7335c6cce2050359b3"
+    },
+    {
+      "path": "assets/fonts/Metropolis-Thin.ttf",
+      "sha1": "b90aa6b24f582976b4cc7f6e73f955bce3048c23"
     }
   ]
 }

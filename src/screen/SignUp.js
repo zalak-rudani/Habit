@@ -1,3 +1,4 @@
+const styles = StyleSheet.create({});
 import React, {useRef, useState} from 'react';
 import {
   Image,
@@ -19,13 +20,13 @@ import ModalComp from '../components/ModalComp';
 import strings from '../helper/constants/strings';
 import ButtonComp from '../components/ButtonComp';
 import HeaderComp from '../components/HeaderComp';
-import {addData} from '../redux/slice/studentDataSlice';
+import {addData, addDetails} from '../redux/slice/studentDataSlice';
 import TextInputComp from '../components/TextInputComp';
 import commonStyle from '../helper/constants/commonStyle';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Dropdown} from 'react-native-element-dropdown';
 
-const StudentRegistration = ({navigation}) => {
+const SignUp = ({navigation}) => {
   const [name, setName] = useState('');
   const [nameEr, setNameEr] = useState('');
   const [fatherName, setFatherName] = useState('');
@@ -212,7 +213,7 @@ const StudentRegistration = ({navigation}) => {
 
   const dispatch = useDispatch();
 
-  const getData = () => {
+  const getDetails = () => {
     const newData = {
       id: uuid.v4(),
       name,
@@ -228,7 +229,7 @@ const StudentRegistration = ({navigation}) => {
       weight,
       email,
     };
-    dispatch(addData(newData));
+    dispatch(addDetails(newData));
   };
 
   const mobileNoValidation = () => {
@@ -300,10 +301,7 @@ const StudentRegistration = ({navigation}) => {
   ];
   return (
     <View style={commonStyle.flex1}>
-      <HeaderComp
-        text={strings.studentRegistration.studentRegistration}
-        onPress={() => navigation.goBack()}
-      />
+      <HeaderComp text={'Login Page'} onPress={() => navigation.goBack()} />
 
       <KeyboardAwareScrollView contentContainerStyle={{paddingBottom: 100}}>
         <ScrollView style={{marginHorizontal: wp(15)}}>
@@ -491,7 +489,7 @@ const StudentRegistration = ({navigation}) => {
         }}>
         <ButtonComp
           onPress={() => {
-            getData(), navigation.navigate('StandardDetails');
+            getDetails(), navigation.navigate('StandardDetails');
           }}
           text={strings.button.register}
         />
@@ -517,52 +515,4 @@ const StudentRegistration = ({navigation}) => {
   );
 };
 
-export default StudentRegistration;
-
-const styles = StyleSheet.create({
-  dropdown: {
-    marginTop: 100,
-    height: 50,
-    borderBottomColor: 'gray',
-    borderBottomWidth: 0.5,
-  },
-
-  placeholderStyle: {
-    fontSize: 16,
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
-  },
-});
-
-{
-  /* <Dropdown
-style={styles.dropdown}
-placeholderStyle={styles.placeholderStyle}
-selectedTextStyle={styles.selectedTextStyle}
-// inputSearchStyle={styles.inputSearchStyle}
-iconStyle={styles.iconStyle}
-data={data}
-search
-maxHeight={300}
-labelField="label"
-valueField="value"
-placeholder="Select item"
-searchPlaceholder="Search..."
-value={value}
-onChange={item => {
-  setValue(item.value);
-}}
-// renderLeftIcon={() => (
-//   // <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-// )}
-/> */
-}
+export default SignUp;

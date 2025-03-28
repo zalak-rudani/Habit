@@ -42,6 +42,11 @@ const StudentsCards = ({navigation, route}) => {
         renderItem={({item}) => {
           return (
             <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('StudentDetails', {
+                  id: item?.id,
+                })
+              }
               style={{
                 ...commonStyle.studentCard,
                 borderLeftColor: colors.blue,
@@ -63,7 +68,7 @@ const StudentsCards = ({navigation, route}) => {
                 style={{
                   flexDirection: 'row',
                   // backgroundColor: 'red',
-
+                  // paddingRight: 20,
                   flex: 1,
                   justifyContent: 'flex-start',
                 }}>
@@ -71,6 +76,7 @@ const StudentsCards = ({navigation, route}) => {
                   source={icons.numbers}
                   style={{...commonStyle.icon, marginRight: 15}}
                 />
+                {/* <Text style={commonStyle.headText}>{'Roll No.'}</Text> */}
                 <Text style={commonStyle.subHeadText}>{item?.rollNo}</Text>
               </View>
               <View

@@ -36,7 +36,7 @@ const HomePage = ({navigation}) => {
         </Text>
         <Text
           style={[
-            {...commonStyle.subHeadText, color: colors.primary.fontColor},
+            {...commonStyle.headText, color: colors.primary.fontColor},
             commonStyle.margin10,
           ]}>
           {userData?.name}

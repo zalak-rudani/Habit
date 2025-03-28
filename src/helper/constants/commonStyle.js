@@ -12,20 +12,20 @@ const commonStyle = StyleSheet.create({
   subHeadText: {
     fontSize: 22,
     fontWeight: '500',
-    fontFamily: fonts.metrophobic_regular,
+    fontFamily: fonts.medium,
     color: colors.primary.fontColor,
   },
 
   headText: {
     fontSize: 25,
-    fontFamily: fonts.metrophobic_regular,
+    fontFamily: fonts.bold,
     color: colors.screenHead,
   },
 
   text: {
     fontSize: 16,
     fontWeight: '600',
-    fontFamily: fonts.metrophobic_regular,
+    fontFamily: fonts.extraLight,
     color: colors.primary.fontColor,
   },
 
@@ -64,7 +64,7 @@ const commonStyle = StyleSheet.create({
   error: {
     color: 'red',
     fontSize: 12,
-    fontFamily: fonts.metrophobic_regular,
+    fontFamily: fonts.extraLight,
   },
 
   textInput: {
@@ -72,16 +72,17 @@ const commonStyle = StyleSheet.create({
     fontWeight: '400',
     flex: 1,
     paddingVertical: 15,
-    fontFamily: fonts.metrophobic_regular,
+    fontFamily: fonts.extraLight,
     color: colors.primary.fontColor,
   },
   stdDivCards: {
-    flex: 1,
+    // flex: 1,
     padding: 15,
     backgroundColor: colors.white,
     margin: hp(10),
     borderRadius: 5,
     height: hp(150),
+    width: wp(175),
     alignItems: 'center',
     // width: wp(50),
   },

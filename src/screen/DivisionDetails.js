@@ -15,11 +15,12 @@ import icons from '../helper/constants/icons';
 
 const DivisionDetails = ({navigation, route}) => {
   const standard = route?.params?.std;
-  // console.log('ID-=-=-=-=-=', studentId);
+  console.log('standard-=-=-=-=-=', standard);
 
   const studentsData = useSelector(
     state => state?.studentDataSlice?.studentData,
   );
+  console.log('studentsData-=-=-=-=-=', studentsData);
 
   const sameStdStudent = studentsData?.filter(element => {
     if (element?.std === standard) {
@@ -41,9 +42,13 @@ const DivisionDetails = ({navigation, route}) => {
   ];
 
   const division = divisions.map(item => {
-    const data = stdDetails.filter(items => items?.std == item?.title);
-    return {...item, count: data.length};
+    const sameStdDivStudentData = sameStdStudent.filter(
+      items => items?.div === item?.title,
+    );
+    return {...item, count: sameStdDivStudentData?.length};
   });
+
+  console.log('sameStdDivStudentData=-=-=-=-=-=', division);
 
   return (
     <View style={commonStyle.flex1}>
@@ -60,12 +65,15 @@ const DivisionDetails = ({navigation, route}) => {
               onPress={() =>
                 navigation.navigate('StudentsCards', {
                   std: standard,
-                  div: item?.div,
+                  div: item?.title,
                 })
               }>
               {console.log('item-*-*-*-*-*', item)}
-              {console.log('item====*-*-*', item?.email)}
-              <Text style={commonStyle.subHeadText}>{item?.title}</Text>
+
+              <Text style={{...commonStyle.subHeadText, paddingBottom: 15}}>
+                {item?.title}
+              </Text>
+              <Text style={commonStyle.subHeadText}>{`(${item?.count})`}</Text>
             </TouchableOpacity>
           );
         }}

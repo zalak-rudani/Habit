@@ -14,6 +14,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ActivityIndicator, View} from 'react-native';
 import LandingScreen from '../screen/LandingScreen';
 import {useSelector} from 'react-redux';
+import DropdownComponent from '../screen/DropdownComponent';
+import SignUp from '../screen/SignUp';
 
 const Stack = createStackNavigator();
 
@@ -53,7 +55,10 @@ const RootNavigator = () => {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName={isLoggedIn ? 'HomePage' : 'LoginPage'}>
+        // initialRouteName={isLoggedIn ? 'HomePage' : 'LoginPage'}
+      >
+        <Stack.Screen name={'SignUp'} component={SignUp} />
+
         <Stack.Screen
           options={{animation: 'fade'}}
           name={'LoginPage'}
@@ -106,3 +111,10 @@ export default RootNavigator;
 //   </Stack.Navigator>
 // )}
 // </NavigationContainer>
+
+{
+  /* <Stack.Screen
+  name={'DropdownComponent'}
+  component={DropdownComponent}
+/> */
+}

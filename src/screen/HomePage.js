@@ -19,28 +19,35 @@ import commonStyle from '../helper/constants/commonStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomePage = ({navigation}) => {
-  const userData = useSelector(state => state?.studentDataSlice?.studentInfo);
+  const userData = useSelector(state => state?.studentDataSlice?.userDetails);
   console.log('studentINFO-=-=-=-=-=', userData);
 
   // const data = AsyncStorage.getItem('userData');
-  // console.log('Dataaaa-=-=-=-=', data?.name);
+  // console.log('Data-=-=-=-=', data?.name);
 
-  console.log('userdata-=-=-=-=', userData);
   // console.log('name-=-////////////=-=-=', data?.name);
 
   return (
     <View style={[commonStyle.flex1]}>
       <View style={styles.marginTop}>
-        <Text style={{...commonStyle.text, color: colors.gray}}>
-          {strings.homePage.hello}
-        </Text>
-        <Text
-          style={[
-            {...commonStyle.headText, color: colors.primary.fontColor},
-            commonStyle.margin10,
-          ]}>
-          {userData?.name}
-        </Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{flex: 1}}>
+            <Text style={{...commonStyle.text, color: colors.gray}}>
+              {strings.homePage.hello}
+            </Text>
+            <Text
+              style={[
+                {...commonStyle.headText, color: colors.primary.fontColor},
+                commonStyle.margin10,
+              ]}>
+              {userData?.name}
+            </Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('UserDetails')}>
+            <Image source={icons.user} style={commonStyle.icon} />
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.searchView}>
           <Image style={styles.icon} source={icons.search} />
           <TextInput placeholder="Search" />

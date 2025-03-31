@@ -11,7 +11,7 @@ import commonStyle from '../helper/constants/commonStyle';
 import icons from '../helper/constants/icons';
 import {hp, wp} from '../helper/globalFunc';
 
-const HeaderComp = ({onPress, text, text2}) => {
+const HeaderComp = ({onPress1, onPress2, text, source1, source2}) => {
   return (
     <>
       <SafeAreaView style={{backgroundColor: '#FFF'}} />
@@ -23,12 +23,12 @@ const HeaderComp = ({onPress, text, text2}) => {
           backgroundColor: '#FFF',
           paddingVertical: hp(8),
         }}>
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={onPress1}>
           <Image
             style={{
               ...commonStyle.icon,
             }}
-            source={icons.left}
+            source={source1}
           />
         </TouchableOpacity>
         <View style={{flex: 1, marginLeft: wp(6)}}>
@@ -39,6 +39,14 @@ const HeaderComp = ({onPress, text, text2}) => {
             {text}
           </Text>
         </View>
+        <TouchableOpacity onPress={onPress2}>
+          <Image
+            style={{
+              ...commonStyle.icon,
+            }}
+            source={source2}
+          />
+        </TouchableOpacity>
       </View>
     </>
   );

@@ -52,6 +52,10 @@ const commonStyle = StyleSheet.create({
     height: hp(50),
     width: hp(50),
   },
+  icon70: {
+    height: hp(80),
+    width: hp(80),
+  },
 
   plus: {
     alignItems: 'flex-end',

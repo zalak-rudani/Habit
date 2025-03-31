@@ -303,6 +303,7 @@ const StudentRegistration = ({navigation}) => {
       <HeaderComp
         text={strings.studentRegistration.studentRegistration}
         onPress={() => navigation.goBack()}
+        source={icons.left}
       />
 
       <KeyboardAwareScrollView contentContainerStyle={{paddingBottom: 100}}>

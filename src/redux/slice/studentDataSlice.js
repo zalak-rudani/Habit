@@ -3,28 +3,30 @@ import {createSlice} from '@reduxjs/toolkit';
 const studentDataSlice = createSlice({
   name: 'studentDataSlice',
   initialState: {
-    studentInfo: {},
-    studentDetails: {},
+    userInfo: {},
+    userDetails: {},
     studentData: [],
-    value: 0,
   },
   reducers: {
     addInfo(state, action) {
       console.log('state-=-=-=', state);
       console.log('action-=-=-=', action?.payload);
-      state.studentInfo = action?.payload;
-      console.log('state.studentInfo-=-=-=', state.studentInfo);
+      state.userInfo = action?.payload;
+      console.log('state.userInfo-=-=-=', state.userInfo);
     },
     addDetails(state, action) {
-      console.log('state-=-=-=', state);
-      console.log('action-=-=-=', action?.payload);
-      state.studentDetails = action?.payload;
-      console.log('state.studentInfo-=-=-=', state.studentDetails);
+      state.userDetails = action?.payload;
+      console.log('state.userDetails-=-=-=', state.userDetails);
     },
     addData(state, action) {
       console.log('state-=-=-=', state);
       console.log('action-=-=-=', action.payload);
       state.studentData = [...state.studentData, action.payload];
+    },
+    logOut(state) {
+      state.userInfo = {};
+      state.studentData = [];
+      state.userDetails = {};
     },
     removeData(state, action) {
       let updateData = state?.studentData?.filter(item => {
@@ -33,12 +35,8 @@ const studentDataSlice = createSlice({
 
       state.studentData = updateData;
     },
-    increment(state) {
-      state.value += 1;
-    },
   },
 });
-
 export default studentDataSlice.reducer;
-export const {addInfo, addData, increment, addDetails, removeData} =
+export const {addInfo, addData, addDetails, removeData, logOut} =
   studentDataSlice.actions;

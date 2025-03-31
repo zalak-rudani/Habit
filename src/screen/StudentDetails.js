@@ -7,6 +7,7 @@ import strings from '../helper/constants/strings';
 import {fonts} from '../helper/constants/fonts';
 import colors from '../helper/constants/colors';
 import TextComp from '../components/TextComp';
+import icons from '../helper/constants/icons';
 
 const StudentDetails = ({navigation, route}) => {
   const studentId = route?.params?.id;
@@ -32,6 +33,7 @@ const StudentDetails = ({navigation, route}) => {
       <HeaderComp
         onPress={() => navigation.goBack()}
         text={strings.studentDetails.studentDetails}
+        source={icons.left}
       />
 
       {/* <View style={{alignItems: 'center', padding: 30}}> */}

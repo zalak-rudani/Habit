@@ -8,18 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		0C80B921A6F3F58F76C31292 /* libPods-Habit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Habit.a */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		613F3202C4409CE61EC5F0DB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
-		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		F841C6A7630C4341BE0DA1E7 /* Metrophobic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A91571407134F528FCA2BFD /* Metrophobic-Regular.ttf */; };
-		7ECA558335DD488FA785FC5D /* Metropolis-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD6FD8638DC845A9940E1CC7 /* Metropolis-Black.ttf */; };
-		94B88DF069164B47A59CAAFB /* Metropolis-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DFD24D4B9AB433497542AAA /* Metropolis-Bold.ttf */; };
-		6466A80875F44B63B709C216 /* Metropolis-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 369984F8F40B4B7BB204BE2C /* Metropolis-ExtraBold.ttf */; };
 		12C80DC0C95F42CDBE084AD0 /* Metropolis-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F491EB4DCF941799CD63AEB /* Metropolis-Medium.ttf */; };
-		A429120F313347209F8D702F /* Metropolis-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDB70FA232F34B50A3143DC1 /* Metropolis-Regular.ttf */; };
-		4EC02DE55C3042DA837FF951 /* Metropolis-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47B3E00FF90F414A8C1E7A88 /* Metropolis-SemiBold.ttf */; };
+		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		4D3B02FD37674B71819C6BF4 /* Metropolis-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE3B4E874C3844EABEBFF444 /* Metropolis-Thin.ttf */; };
+		4EC02DE55C3042DA837FF951 /* Metropolis-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47B3E00FF90F414A8C1E7A88 /* Metropolis-SemiBold.ttf */; };
+		613F3202C4409CE61EC5F0DB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		6466A80875F44B63B709C216 /* Metropolis-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 369984F8F40B4B7BB204BE2C /* Metropolis-ExtraBold.ttf */; };
+		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+		7ECA558335DD488FA785FC5D /* Metropolis-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD6FD8638DC845A9940E1CC7 /* Metropolis-Black.ttf */; };
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		94B88DF069164B47A59CAAFB /* Metropolis-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DFD24D4B9AB433497542AAA /* Metropolis-Bold.ttf */; };
+		A429120F313347209F8D702F /* Metropolis-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDB70FA232F34B50A3143DC1 /* Metropolis-Regular.ttf */; };
+		F841C6A7630C4341BE0DA1E7 /* Metrophobic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A91571407134F528FCA2BFD /* Metrophobic-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,19 +28,19 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Habit/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = Habit/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		1A91571407134F528FCA2BFD /* Metrophobic-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metrophobic-Regular.ttf"; path = "../assets/fonts/Metrophobic-Regular.ttf"; sourceTree = "<group>"; };
+		369984F8F40B4B7BB204BE2C /* Metropolis-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-ExtraBold.ttf"; path = "../assets/fonts/Metropolis-ExtraBold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Habit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Habit.debug.xcconfig"; path = "Target Support Files/Pods-Habit/Pods-Habit.debug.xcconfig"; sourceTree = "<group>"; };
+		3F491EB4DCF941799CD63AEB /* Metropolis-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Medium.ttf"; path = "../assets/fonts/Metropolis-Medium.ttf"; sourceTree = "<group>"; };
+		47B3E00FF90F414A8C1E7A88 /* Metropolis-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-SemiBold.ttf"; path = "../assets/fonts/Metropolis-SemiBold.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Habit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Habit.release.xcconfig"; path = "Target Support Files/Pods-Habit/Pods-Habit.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Habit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Habit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DFD24D4B9AB433497542AAA /* Metropolis-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Bold.ttf"; path = "../assets/fonts/Metropolis-Bold.ttf"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Habit/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Habit/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BD6FD8638DC845A9940E1CC7 /* Metropolis-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Black.ttf"; path = "../assets/fonts/Metropolis-Black.ttf"; sourceTree = "<group>"; };
+		BE3B4E874C3844EABEBFF444 /* Metropolis-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Thin.ttf"; path = "../assets/fonts/Metropolis-Thin.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		BD6FD8638DC845A9940E1CC7 /* Metropolis-Black.ttf */ = {isa = PBXFileReference; name = "Metropolis-Black.ttf"; path = "../assets/fonts/Metropolis-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6DFD24D4B9AB433497542AAA /* Metropolis-Bold.ttf */ = {isa = PBXFileReference; name = "Metropolis-Bold.ttf"; path = "../assets/fonts/Metropolis-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		369984F8F40B4B7BB204BE2C /* Metropolis-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Metropolis-ExtraBold.ttf"; path = "../assets/fonts/Metropolis-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3F491EB4DCF941799CD63AEB /* Metropolis-Medium.ttf */ = {isa = PBXFileReference; name = "Metropolis-Medium.ttf"; path = "../assets/fonts/Metropolis-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		EDB70FA232F34B50A3143DC1 /* Metropolis-Regular.ttf */ = {isa = PBXFileReference; name = "Metropolis-Regular.ttf"; path = "../assets/fonts/Metropolis-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		47B3E00FF90F414A8C1E7A88 /* Metropolis-SemiBold.ttf */ = {isa = PBXFileReference; name = "Metropolis-SemiBold.ttf"; path = "../assets/fonts/Metropolis-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		BE3B4E874C3844EABEBFF444 /* Metropolis-Thin.ttf */ = {isa = PBXFileReference; name = "Metropolis-Thin.ttf"; path = "../assets/fonts/Metropolis-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EDB70FA232F34B50A3143DC1 /* Metropolis-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Metropolis-Regular.ttf"; path = "../assets/fonts/Metropolis-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

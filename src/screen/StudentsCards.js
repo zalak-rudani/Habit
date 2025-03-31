@@ -36,6 +36,7 @@ const StudentsCards = ({navigation, route}) => {
       <HeaderComp
         text={`${standard}-${division}`}
         onPress={() => navigation.goBack()}
+        source={icons.left}
       />
       <FlatList
         data={sameStdDivStudents}

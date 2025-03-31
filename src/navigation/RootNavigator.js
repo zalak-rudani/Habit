@@ -16,6 +16,7 @@ import LandingScreen from '../screen/LandingScreen';
 import {useSelector} from 'react-redux';
 import DropdownComponent from '../screen/DropdownComponent';
 import SignUp from '../screen/SignUp';
+import UserDetails from '../screen/UserDetails';
 
 const Stack = createStackNavigator();
 
@@ -69,6 +70,7 @@ const RootNavigator = () => {
           name={'HomePage'}
           component={HomePage}
         />
+        <Stack.Screen name={'UserDetails'} component={UserDetails} />
         <Stack.Screen name={'DivisionDetails'} component={DivisionDetails} />
         <Stack.Screen name={'StandardDetails'} component={StandardDetails} />
         <Stack.Screen name={'StudentDetails'} component={StudentDetails} />

@@ -214,22 +214,22 @@ const SignUp = ({navigation}) => {
   const dispatch = useDispatch();
 
   const getDetails = () => {
-    const newData = {
+    const data = {
       id: uuid.v4(),
-      name,
-      gender,
-      rollNo,
-      fatherName,
-      motherName,
       age,
       std,
       div,
-      phoneNo,
-      height,
-      weight,
+      name,
       email,
+      rollNo,
+      weight,
+      height,
+      gender,
+      phoneNo,
+      fatherName,
+      motherName,
     };
-    dispatch(addDetails(newData));
+    dispatch(addDetails(data));
   };
 
   const mobileNoValidation = () => {
@@ -289,19 +289,9 @@ const SignUp = ({navigation}) => {
     }
   };
 
-  const data = [
-    {label: 'Item 1', value: '1'},
-    {label: 'Item 2', value: '2'},
-    {label: 'Item 3', value: '3'},
-    {label: 'Item 4', value: '4'},
-    {label: 'Item 5', value: '5'},
-    {label: 'Item 6', value: '6'},
-    {label: 'Item 7', value: '7'},
-    {label: 'Item 8', value: '8'},
-  ];
   return (
     <View style={commonStyle.flex1}>
-      <HeaderComp text={'Login Page'} onPress={() => navigation.goBack()} />
+      <HeaderComp text={'Sign Up'} onPress={() => navigation.goBack()} />
 
       <KeyboardAwareScrollView contentContainerStyle={{paddingBottom: 100}}>
         <ScrollView style={{marginHorizontal: wp(15)}}>
@@ -489,7 +479,7 @@ const SignUp = ({navigation}) => {
         }}>
         <ButtonComp
           onPress={() => {
-            getDetails(), navigation.navigate('StandardDetails');
+            getDetails(), navigation.navigate('HomePage');
           }}
           text={strings.button.register}
         />

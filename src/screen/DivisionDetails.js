@@ -52,7 +52,11 @@ const DivisionDetails = ({navigation, route}) => {
 
   return (
     <View style={commonStyle.flex1}>
-      <HeaderComp text={`${standard}`} onPress={() => navigation.goBack()} />
+      <HeaderComp
+        text={`${standard}`}
+        onPress={() => navigation.goBack()}
+        source={icons.left}
+      />
 
       <FlatList
         numColumns={2}

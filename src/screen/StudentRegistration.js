@@ -23,9 +23,17 @@ import {addData} from '../redux/slice/studentDataSlice';
 import TextInputComp from '../components/TextInputComp';
 import commonStyle from '../helper/constants/commonStyle';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Dropdown} from 'react-native-element-dropdown';
+import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownComp from '../components/DropDownComp';
 
 const StudentRegistration = ({navigation}) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: 'Boy', value: 'Boy'},
+    {label: 'Girl', value: 'Girl'},
+  ]);
+
   const [name, setName] = useState('');
   const [nameEr, setNameEr] = useState('');
   const [fatherName, setFatherName] = useState('');
@@ -53,8 +61,6 @@ const StudentRegistration = ({navigation}) => {
   const [weightEr, setWeightEr] = useState('');
   const [email, setEmail] = useState('');
   const [emailEr, setEmailEr] = useState('');
-
-  const [value, setValue] = useState(null);
 
   const division = [
     {
@@ -302,8 +308,8 @@ const StudentRegistration = ({navigation}) => {
     <View style={commonStyle.flex1}>
       <HeaderComp
         text={strings.studentRegistration.studentRegistration}
-        onPress={() => navigation.goBack()}
-        source={icons.left}
+        onPress1={() => navigation.goBack()}
+        source1={icons.left}
       />
 
       <KeyboardAwareScrollView contentContainerStyle={{paddingBottom: 100}}>
@@ -390,6 +396,8 @@ const StudentRegistration = ({navigation}) => {
             ref={genderRef}
             returnKeyType={'next'}
           />
+
+          <DropDownComp text={'Gender'} />
 
           <TextInputComp
             text={'Roll no.'}
@@ -524,7 +532,7 @@ const styles = StyleSheet.create({
   dropdown: {
     marginTop: 100,
     height: 50,
-    borderBottomColor: 'gray',
+    borderBottomColor: colors,
     borderBottomWidth: 0.5,
   },
 
@@ -567,3 +575,25 @@ onChange={item => {
 // )}
 /> */
 }
+
+// import DropDownPicker from 'react-native-dropdown-picker';
+
+// function App() {
+//   const [open, setOpen] = useState(false);
+//   const [value, setValue] = useState(null);
+//   const [items, setItems] = useState([
+//     {label: 'Apple', value: 'apple'},
+//     {label: 'Banana', value: 'banana'}
+//   ]);
+
+//   return (
+//     <DropDownPicker
+//       open={open}
+//       value={value}
+//       items={items}
+//       setOpen={setOpen}
+//       setValue={setValue}
+//       setItems={setItems}
+//     />
+//   );
+// }

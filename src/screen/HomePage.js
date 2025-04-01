@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Button,
+  FlatList,
 } from 'react-native';
 
 import {useSelector} from 'react-redux';
@@ -16,16 +17,16 @@ import icons from '../helper/constants/icons';
 import colors from '../helper/constants/colors';
 import strings from '../helper/constants/strings';
 import commonStyle from '../helper/constants/commonStyle';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomePage = ({navigation}) => {
+  const [input, setInput] = useState('');
   const userData = useSelector(state => state?.studentDataSlice?.userDetails);
-  console.log('studentINFO-=-=-=-=-=', userData);
+  console.log('userData-=-=-=-=-=', userData);
 
-  // const data = AsyncStorage.getItem('userData');
-  // console.log('Data-=-=-=-=', data?.name);
-
-  // console.log('name-=-////////////=-=-=', data?.name);
+  const studentData = useSelector(
+    state => state?.studentDataSlice?.studentData,
+  );
+  console.log('studentDataName-=-=-=-=-=', studentData);
 
   return (
     <View style={[commonStyle.flex1]}>
@@ -50,8 +51,43 @@ const HomePage = ({navigation}) => {
 
         <View style={styles.searchView}>
           <Image style={styles.icon} source={icons.search} />
-          <TextInput placeholder="Search" />
+          <TextInput
+            style={{flex: 1}}
+            placeholder="Search"
+            clearButtonMode="always"
+            value={input}
+            onChangeText={text => setInput(text)}
+            // onSubmitEditing={() =>
+            //   navigation.navigate('StudentDetails', {id: studentId})
+            // }
+          />
         </View>
+        <FlatList
+          style={styles.flatList}
+          data={studentData}
+          renderItem={({item}) => {
+            if (input === '') {
+              return null;
+            }
+            if (item?.name?.toLowerCase()?.includes(input?.toLowerCase())) {
+              return (
+                <View style={{marginVertical: 2}}>
+                  <TouchableOpacity
+                    style={styles.flatListView}
+                    onPress={() => {
+                      // setStudentId(item?.id);
+                      setInput(item?.name);
+                      navigation.navigate('StudentDetails', {id: item?.id});
+                      setInput('');
+                    }}>
+                    <Text style={commonStyle.text}>{item?.name}</Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            }
+          }}
+        />
+
         <Text
           style={{
             ...commonStyle.subHeadText,
@@ -109,21 +145,25 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(45),
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    position: 'static',
   },
 
   studentIcon: {
     height: hp(150),
     width: hp(150),
   },
+  flatList: {
+    position: 'absolute',
+    marginVertical: 120,
+    marginLeft: 40,
+  },
+
+  flatListView: {
+    backgroundColor: '#EFEFF1',
+    padding: 10,
+    borderRadius: 10,
+    width: wp(250),
+  },
 });
 
-{
-  /* 
-      <Button
-        title="button"
-        onPress={async () => {
-          await AsyncStorage.removeItem('userData');
-          navigation.navigate('LoginPage');
-        }}
-      /> */
-}
+// backgroundColor: '#ff004F05',

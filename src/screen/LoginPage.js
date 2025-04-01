@@ -37,17 +37,10 @@ const LoginPage = ({navigation}) => {
       />
       <Button
         title={strings.loginPage.login}
-        onPress={async () => {
-          // console.log('dispatch-=-=-=-=', dispatch(addData(email, name)));
-
-          const data = {
-            email: email,
-            name: name,
-          };
+        onPress={() => {
           if (name && email) {
             saveData();
-            await AsyncStorage.setItem('userData', JSON.stringify(data));
-            navigation.navigate('HomePage');
+            navigation.navigate('SignUp');
           }
         }}
       />

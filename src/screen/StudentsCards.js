@@ -35,8 +35,8 @@ const StudentsCards = ({navigation, route}) => {
     <View style={commonStyle.flex1}>
       <HeaderComp
         text={`${standard}-${division}`}
-        onPress={() => navigation.goBack()}
-        source={icons.left}
+        onPress1={() => navigation.goBack()}
+        source1={icons.left}
       />
       <FlatList
         data={sameStdDivStudents}

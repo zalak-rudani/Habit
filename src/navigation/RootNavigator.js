@@ -12,9 +12,8 @@ import DivisionDetails from '../screen/DivisionDetails';
 import StudentRegistration from '../screen/StudentRegistration';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ActivityIndicator, View} from 'react-native';
-import LandingScreen from '../screen/LandingScreen';
 import {useSelector} from 'react-redux';
-import DropdownComponent from '../screen/DropdownComponent';
+
 import SignUp from '../screen/SignUp';
 import UserDetails from '../screen/UserDetails';
 
@@ -26,11 +25,15 @@ const RootNavigator = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const userData = useSelector(state => state?.studentDataSlice?.studentInfo);
-  console.log('userData*****************-=-=-=-', userData);
+  const userData = useSelector(state => state?.studentDataSlice?.userInfo);
+  console.log(
+    'userData*****************-=-=-=-',
+    userData?.name,
+    userData?.email,
+  );
 
   const getData = () => {
-    if (userData) {
+    if (userData?.name && userData?.email) {
       setIsLoading(false);
       setIsLoggedIn(true);
       return true;
@@ -56,15 +59,14 @@ const RootNavigator = () => {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        // initialRouteName={isLoggedIn ? 'HomePage' : 'LoginPage'}
-      >
-        <Stack.Screen name={'SignUp'} component={SignUp} />
-
+        initialRouteName={isLoggedIn ? 'HomePage' : 'LoginPage'}>
         <Stack.Screen
           options={{animation: 'fade'}}
           name={'LoginPage'}
           component={LoginPage}
         />
+        <Stack.Screen name={'SignUp'} component={SignUp} />
+
         <Stack.Screen
           options={{animation: 'fade'}}
           name={'HomePage'}

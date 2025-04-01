@@ -77,8 +77,8 @@ const StandardDetails = ({navigation}) => {
     <View style={commonStyle.flex1}>
       <HeaderComp
         text={strings.standardDetails.standards}
-        onPress={() => navigation.goBack()}
-        source={icons.left}
+        onPress1={() => navigation.goBack()}
+        source1={icons.left}
       />
 
       <FlatList

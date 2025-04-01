@@ -25,15 +25,12 @@ const StudentDetails = ({navigation, route}) => {
   })[0];
   console.log('studentDetails-=-=-=-=', studentDetails);
 
-  const date = new Date();
-  console.log('date-=-=-=', date);
-
   return (
     <View style={commonStyle.flex1}>
       <HeaderComp
-        onPress={() => navigation.goBack()}
+        onPress1={() => navigation.goBack()}
         text={strings.studentDetails.studentDetails}
-        source={icons.left}
+        source1={icons.left}
       />
 
       {/* <View style={{alignItems: 'center', padding: 30}}> */}

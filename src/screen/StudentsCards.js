@@ -1,19 +1,22 @@
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
 import React from 'react';
-import commonStyle from '../helper/constants/commonStyle';
-import {hp, wp} from '../helper/globalFunc';
+import {
+  View,
+  Text,
+  Alert,
+  Image,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+
 import icons from '../helper/constants/icons';
-import strings from '../helper/constants/strings';
-import {useSelector} from 'react-redux';
 import colors from '../helper/constants/colors';
+import {removeData} from '../redux/slice/studentDataSlice';
+import commonStyle from '../helper/constants/commonStyle';
+
 import HeaderComp from '../components/HeaderComp';
+
+import {useDispatch, useSelector} from 'react-redux';
 
 const StudentsCards = ({navigation, route}) => {
   const standard = route?.params?.std;
@@ -29,7 +32,10 @@ const StudentsCards = ({navigation, route}) => {
     }
   });
 
-  console.log('sameStdDivStudents-=-=-=-=-=', sameStdDivStudents);
+  const dispatch = useDispatch();
+  const deleteData = item => {
+    dispatch(removeData(item));
+  };
 
   return (
     <View style={commonStyle.flex1}>
@@ -52,46 +58,44 @@ const StudentsCards = ({navigation, route}) => {
                 ...commonStyle.studentCard,
                 borderLeftColor: colors.blue,
               }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  // backgroundColor: 'red',
-                  flex: 1,
-                  alignItems: 'center',
-                }}>
+              <View style={styles.detailView}>
                 <Image
                   source={item?.gender === 'Boy' ? icons.boy : icons.girl}
-                  style={{...commonStyle.icon, marginRight: 15}}
+                  style={styles.icon}
                 />
-                <Text style={commonStyle.subHeadText}>{item?.name}</Text>
+                <Text style={{...commonStyle.mediumText, flex: 1}}>
+                  {item?.name}
+                </Text>
+                <View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      Alert.alert('Delete', 'Are you sure?', [
+                        {
+                          text: 'Cancel',
+                        },
+                        {text: 'OK', onPress: () => deleteData(item?.id)},
+                      ])
+                    }>
+                    <Image source={icons.delete} style={commonStyle.icon} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('StudentRegistration', {
+                        updatedData: item,
+                      })
+                    }>
+                    <Image source={icons.edit} style={commonStyle.icon} />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  // backgroundColor: 'red',
-                  // paddingRight: 20,
-                  flex: 1,
-                  justifyContent: 'flex-start',
-                }}>
-                <Image
-                  source={icons.numbers}
-                  style={{...commonStyle.icon, marginRight: 15}}
-                />
-                {/* <Text style={commonStyle.headText}>{'Roll No.'}</Text> */}
-                <Text style={commonStyle.subHeadText}>{item?.rollNo}</Text>
+              <View style={styles.detailView}>
+                <Image source={icons.numbers} style={styles.icon} />
+
+                <Text style={commonStyle.mediumText}>{item?.rollNo}</Text>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  // backgroundColor: 'red',
-                  flex: 1,
-                  justifyContent: 'flex-start',
-                }}>
-                <Image
-                  source={icons.phone}
-                  style={{...commonStyle.icon, marginRight: 15}}
-                />
-                <Text style={commonStyle.subHeadText}>{item?.phoneNo}</Text>
+              <View style={styles.detailView}>
+                <Image source={icons.phone} style={styles.icon} />
+                <Text style={commonStyle.mediumText}>{item?.phoneNo}</Text>
               </View>
             </TouchableOpacity>
           );
@@ -102,3 +106,15 @@ const StudentsCards = ({navigation, route}) => {
 };
 
 export default StudentsCards;
+const styles = StyleSheet.create({
+  detailView: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  icon: {
+    ...commonStyle.icon,
+    marginRight: 15,
+  },
+});

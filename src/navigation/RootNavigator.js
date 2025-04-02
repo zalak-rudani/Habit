@@ -10,7 +10,6 @@ import StudentDetails from '../screen/StudentDetails';
 import StandardDetails from '../screen/StandardDetails';
 import DivisionDetails from '../screen/DivisionDetails';
 import StudentRegistration from '../screen/StudentRegistration';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ActivityIndicator, View} from 'react-native';
 import {useSelector} from 'react-redux';
 

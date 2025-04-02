@@ -1,7 +1,8 @@
 import {StyleSheet} from 'react-native';
+
 import colors from './colors';
-import {hp, wp} from '../globalFunc';
 import {fonts} from './fonts';
+import {hp, wp} from '../globalFunc';
 
 const commonStyle = StyleSheet.create({
   flex1: {
@@ -24,8 +25,13 @@ const commonStyle = StyleSheet.create({
 
   text: {
     fontSize: 16,
-    fontWeight: '600',
     fontFamily: fonts.extraLight,
+    color: colors.primary.fontColor,
+  },
+
+  mediumText: {
+    fontSize: 20,
+    fontFamily: fonts.medium,
     color: colors.primary.fontColor,
   },
 
@@ -44,8 +50,8 @@ const commonStyle = StyleSheet.create({
   },
 
   icon: {
-    height: hp(30),
-    width: hp(30),
+    height: hp(25),
+    width: hp(25),
   },
 
   icon50: {
@@ -96,7 +102,7 @@ const commonStyle = StyleSheet.create({
     backgroundColor: colors.white,
     borderLeftWidth: 6,
     marginHorizontal: wp(25),
-    marginVertical: hp(10),
+    marginVertical: hp(15),
     borderRadius: 12,
     height: hp(150),
     padding: 15,

@@ -1,11 +1,11 @@
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
-import strings from '../helper/constants/strings';
-import commonStyle from '../helper/constants/commonStyle';
-import {wp} from '../helper/globalFunc';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+
 import {useDispatch} from 'react-redux';
+
+import strings from '../helper/constants/strings';
 import {addInfo} from '../redux/slice/studentDataSlice';
+import commonStyle from '../helper/constants/commonStyle';
 
 const LoginPage = ({navigation}) => {
   const [email, setEmail] = useState('');

@@ -11,7 +11,8 @@ const icons = {
   down: require('../../../assets/icons/down.png'),
   user: require('../../../assets/icons/user.png'),
   power: require('../../../assets/icons/power.png'),
-  id: require('../../../assets/icons/id.svg'),
+  edit: require('../../../assets/icons/edit.png'),
+  delete: require('../../../assets/icons/delete.png'),
 };
 
 export default icons;

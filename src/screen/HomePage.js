@@ -3,11 +3,10 @@ import {
   View,
   Text,
   Image,
+  FlatList,
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Button,
-  FlatList,
 } from 'react-native';
 
 import {useSelector} from 'react-redux';
@@ -154,13 +153,13 @@ const styles = StyleSheet.create({
   },
   flatList: {
     position: 'absolute',
-    marginVertical: 120,
-    marginLeft: 40,
+    marginVertical: hp(120),
+    marginLeft: hp(40),
   },
 
   flatListView: {
     backgroundColor: '#EFEFF1',
-    padding: 10,
+    padding: hp(10),
     borderRadius: 10,
     width: wp(250),
   },

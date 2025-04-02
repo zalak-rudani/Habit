@@ -1,13 +1,15 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import commonStyle from '../helper/constants/commonStyle';
-import {useSelector} from 'react-redux';
+import {Alert, StyleSheet, Text, View} from 'react-native';
+
+import {useDispatch, useSelector} from 'react-redux';
+
+import icons from '../helper/constants/icons';
+import TextComp from '../components/TextComp';
+import {fonts} from '../helper/constants/fonts';
 import HeaderComp from '../components/HeaderComp';
 import strings from '../helper/constants/strings';
-import {fonts} from '../helper/constants/fonts';
-import colors from '../helper/constants/colors';
-import TextComp from '../components/TextComp';
-import icons from '../helper/constants/icons';
+import commonStyle from '../helper/constants/commonStyle';
+import {removeData} from '../redux/slice/studentDataSlice';
 
 const StudentDetails = ({navigation, route}) => {
   const studentId = route?.params?.id;
@@ -25,25 +27,37 @@ const StudentDetails = ({navigation, route}) => {
   })[0];
   console.log('studentDetails-=-=-=-=', studentDetails);
 
+  const dispatch = useDispatch();
+
+  const deleteData = item => {
+    dispatch(removeData(item));
+    navigation.goBack();
+  };
+
   return (
     <View style={commonStyle.flex1}>
       <HeaderComp
-        onPress1={() => navigation.goBack()}
-        text={strings.studentDetails.studentDetails}
         source1={icons.left}
+        onPress1={() => navigation.goBack()}
+        source2={icons.edit}
+        onPress2={() =>
+          navigation.navigate('StudentRegistration', {
+            updatedData: studentDetails,
+          })
+        }
+        source3={icons.delete}
+        onPress3={() =>
+          Alert.alert('Delete', 'Are you sure?', [
+            {
+              text: 'Cancel',
+            },
+            {text: 'OK', onPress: () => deleteData(studentDetails?.id)},
+          ])
+        }
+        text={strings.studentDetails.studentDetails}
       />
 
-      {/* <View style={{alignItems: 'center', padding: 30}}> */}
-      <Text
-        style={{
-          textAlign: 'center',
-          padding: 30,
-          fontFamily: fonts.medium,
-          fontSize: 30,
-        }}>
-        {studentDetails?.name}
-      </Text>
-      {/* </View> */}
+      <Text style={styles.headName}>{studentDetails?.name}</Text>
 
       <TextComp
         head1={'Father Name'}
@@ -71,9 +85,9 @@ const StudentDetails = ({navigation, route}) => {
       />
       <TextComp
         head1={'Height'}
-        val1={studentDetails?.height}
+        val1={`${studentDetails?.height} Feet`}
         head2={'Weight'}
-        val2={studentDetails?.weight}
+        val2={`${studentDetails?.weight} KG`}
       />
       <TextComp head1={'Roll No'} val1={studentDetails?.rollNo} />
     </View>
@@ -81,5 +95,11 @@ const StudentDetails = ({navigation, route}) => {
 };
 
 export default StudentDetails;
-
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  headName: {
+    textAlign: 'center',
+    padding: 30,
+    fontFamily: fonts.medium,
+    fontSize: 30,
+  },
+});

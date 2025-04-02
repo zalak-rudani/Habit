@@ -1,21 +1,19 @@
-import {Alert, Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import commonStyle from '../helper/constants/commonStyle';
-import {useDispatch, useSelector} from 'react-redux';
-import HeaderComp from '../components/HeaderComp';
-import strings from '../helper/constants/strings';
+import {Alert, Image, StyleSheet, Text, View} from 'react-native';
+
+import icons from '../helper/constants/icons';
+import TextComp from '../components/TextComp';
 import {fonts} from '../helper/constants/fonts';
 import colors from '../helper/constants/colors';
-import TextComp from '../components/TextComp';
-import icons from '../helper/constants/icons';
+import HeaderComp from '../components/HeaderComp';
+import {useDispatch, useSelector} from 'react-redux';
 import {logOut} from '../redux/slice/studentDataSlice';
+import commonStyle from '../helper/constants/commonStyle';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const UserDetails = ({navigation}) => {
   const userData = useSelector(state => state?.studentDataSlice?.userDetails);
   console.log('studentData-=-=-=-=', userData);
-
-  const date = new Date();
-  console.log('date-=-=-=', date);
 
   const dispatch = useDispatch();
 
@@ -76,10 +74,12 @@ const UserDetails = ({navigation}) => {
         </View>
       </View>
 
+      {/* <KeyboardAwareScrollView> */}
       <View
         style={{
           borderWidth: 1,
           flex: 1,
+
           paddingHorizontal: 20,
           margin: 15,
           borderRadius: 10,
@@ -176,6 +176,7 @@ const UserDetails = ({navigation}) => {
         val2={userData?.weight}
       />
       <TextComp head1={'Roll No'} val1={userData?.rollNo} />
+      {/* </KeyboardAwareScrollView> */}
     </View>
   );
 };

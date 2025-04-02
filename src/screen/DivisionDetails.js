@@ -1,17 +1,19 @@
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
 import React from 'react';
+import {
+  View,
+  Image,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+
 import {useSelector} from 'react-redux';
-import commonStyle from '../helper/constants/commonStyle';
-import HeaderComp from '../components/HeaderComp';
-import strings from '../helper/constants/strings';
+
+import { hp } from '../helper/globalFunc';
 import icons from '../helper/constants/icons';
+import HeaderComp from '../components/HeaderComp';
+import commonStyle from '../helper/constants/commonStyle';
 
 const DivisionDetails = ({navigation, route}) => {
   const standard = route?.params?.std;
@@ -74,7 +76,7 @@ const DivisionDetails = ({navigation, route}) => {
               }>
               {console.log('item-*-*-*-*-*', item)}
 
-              <Text style={{...commonStyle.subHeadText, paddingBottom: 15}}>
+              <Text style={{...commonStyle.subHeadText, paddingBottom: hp(15)}}>
                 {item?.title}
               </Text>
               <Text style={commonStyle.subHeadText}>{`(${item?.count})`}</Text>
@@ -93,7 +95,7 @@ const DivisionDetails = ({navigation, route}) => {
 
 export default DivisionDetails;
 
-const styles = StyleSheet.create({});
+
 {
   /* <TouchableOpacity onPress={() => deleteData(item?.id)}>
 <Text style={commonStyle.subHeadText}>{'DELETE'}</Text>

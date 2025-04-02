@@ -15,6 +15,7 @@ const strings = {
   },
   button: {
     register: 'Register',
+    update: 'Update',
   },
   studentRegistration: {
     studentRegistration: 'Student Registration',

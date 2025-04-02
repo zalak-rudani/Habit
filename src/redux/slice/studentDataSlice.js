@@ -27,14 +27,22 @@ const studentDataSlice = createSlice({
     },
 
     removeData(state, action) {
-      let updateData = state?.studentData?.filter(item => {
+      let updatedList = state?.studentData?.filter(item => {
         return item?.id !== action?.payload;
       });
 
-      state.studentData = updateData;
+      state.studentData = updatedList;
+    },
+
+    updateData(state, action) {
+      let updatedData = state?.studentData?.map(item => {
+        return item?.id === action?.payload?.id ? action?.payload : item;
+      });
+
+      state.studentData = updatedData;
     },
   },
 });
 export default studentDataSlice.reducer;
-export const {addInfo, addData, addDetails, removeData, logOut} =
+export const {addInfo, addData, addDetails, removeData, logOut, updateData} =
   studentDataSlice.actions;

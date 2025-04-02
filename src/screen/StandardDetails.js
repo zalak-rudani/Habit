@@ -1,13 +1,13 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import commonStyle from '../helper/constants/commonStyle';
+import {View, Text, Image, FlatList, TouchableOpacity} from 'react-native';
+
+import {useDispatch, useSelector} from 'react-redux';
+
 import icons from '../helper/constants/icons';
 import strings from '../helper/constants/strings';
-import {hp, wp} from '../helper/globalFunc';
-import {FlatList} from 'react-native-gesture-handler';
-import {useDispatch, useSelector} from 'react-redux';
-import {removeData} from '../redux/slice/studentDataSlice';
 import HeaderComp from '../components/HeaderComp';
+import commonStyle from '../helper/constants/commonStyle';
+import {removeData} from '../redux/slice/studentDataSlice';
 
 const StandardDetails = ({navigation}) => {
   const stdDetails = useSelector(state => state?.studentDataSlice?.studentData);
@@ -87,20 +87,16 @@ const StandardDetails = ({navigation}) => {
         data={standard}
         renderItem={({item, index}) => {
           return (
-            // <View style={{flex: 1}}>
             <TouchableOpacity
               style={commonStyle.stdDivCards}
               onPress={() =>
                 navigation.navigate('DivisionDetails', {std: item?.title})
               }>
-              {console.log('item-*-*-*-*-*', item)}
-
               <Text style={{...commonStyle.subHeadText, paddingBottom: 15}}>
                 {item?.title}
               </Text>
               <Text style={commonStyle.subHeadText}>{`(${item?.count})`}</Text>
             </TouchableOpacity>
-            // </View>
           );
         }}
       />
@@ -114,5 +110,3 @@ const StandardDetails = ({navigation}) => {
 };
 
 export default StandardDetails;
-
-const styles = StyleSheet.create({});

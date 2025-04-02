@@ -1,73 +1,45 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
-import {hp} from '../helper/globalFunc';
+import {hp, wp} from '../helper/globalFunc';
 import colors from '../helper/constants/colors';
 import commonStyle from '../helper/constants/commonStyle';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {fonts} from '../helper/constants/fonts';
 
 const DropDownComp = ({
   text,
-
   error,
+  open,
+  value,
+  items,
+  onOpen,
+  zIndex,
+  onClose,
+  setOpen,
+  setItems,
+  setValue,
+  zIndexInverse,
 }) => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    {label: 'Boy', value: 'Boy'},
-    {label: 'Girl', value: 'Girl'},
-  ]);
   return (
     <View style={{marginVertical: hp(5)}}>
-      <Text
-        style={{
-          ...commonStyle.text,
-          marginBottom: hp(3),
-
-          color: colors.lightGray,
-        }}>
-        {text}
-      </Text>
+      <Text style={styles.textHead}>{text}</Text>
       <DropDownPicker
-        listMode="SCROLLVIEW"
-        placeholder="Select your restaurant"
-        style={{
-          borderColor: '#F0F4F9',
-          backgroundColor: '#F0F4F9',
-          borderWidth: 1,
-          paddingHorizontal: 12,
-          // paddingVertical: Platform.OS === 'ios' ? 12 : 6,
-          fontSize: 16,
-          borderRadius: 5,
-          marginTop: 8,
-          marginBottom: 16,
-        }}
-        dropDownContainerStyle={{
-          borderColor: 'gray',
-          color: '#000',
-          fontSize: 16,
-          borderRadius: 10,
-        }}
-        // placeholderStyle={{
-        //   color: '#696969',
-        //   fontSize: 16,
-        // }}
-        textStyle={{
-          fontSize: 16,
-        }}
+        // listMode="SCROLLVIEW"
+        style={styles.dropDownView}
+        dropDownContainerStyle={styles.dropDownContainer}
+        placeholderStyle={styles.placeholder}
+        textStyle={styles.text}
         open={open}
         value={value}
         items={items}
         setOpen={setOpen}
         setValue={setValue}
         setItems={setItems}
+        onClose={onClose}
+        onOpen={onOpen}
+        zIndex={zIndex}
+        zIndexInverse={zIndexInverse}
       />
       <Text style={{borderBottomWidth: 1, borderColor: colors.lightGray}} />
       {{error} ? <Text style={commonStyle.error}>{error}</Text> : null}
@@ -76,12 +48,34 @@ const DropDownComp = ({
 };
 
 const styles = StyleSheet.create({
-  textInputView: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: colors.lightGray,
+  dropDownView: {
+    fontSize: 16,
+    paddingHorizontal: wp(-12),
+    marginBottom: hp(-16),
+    borderColor: colors.primary.backgroundColor,
+    backgroundColor: colors.primary.backgroundColor,
+  },
+
+  dropDownContainer: {
+    borderColor: colors.white,
+    // color: 'red',
+    fontSize: 16,
+    borderRadius: 10,
+  },
+  placeholder: {
+    color: colors.primary.backgroundColor,
+    fontSize: 16,
+  },
+  text: {
+    fontSize: 16,
+    flex: 1,
+    fontFamily: fonts.extraLight,
+    color: colors.primary.fontColor,
+  },
+  textHead: {
+    ...commonStyle.text,
+    marginBottom: hp(3),
+    color: colors.lightGray,
   },
 });
 

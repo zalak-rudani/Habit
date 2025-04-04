@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useId, useState} from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,9 @@ const HomePage = ({navigation}) => {
   const [input, setInput] = useState('');
   const userData = useSelector(state => state?.studentDataSlice?.userDetails);
   console.log('userData-=-=-=-=-=', userData);
+
+  const id = useId();
+  console.log('id-=-=-=', id);
 
   const studentData = useSelector(
     state => state?.studentDataSlice?.studentData,

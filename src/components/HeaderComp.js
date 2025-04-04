@@ -10,6 +10,7 @@ import React from 'react';
 import commonStyle from '../helper/constants/commonStyle';
 import icons from '../helper/constants/icons';
 import {hp, wp} from '../helper/globalFunc';
+import colors from '../helper/constants/colors';
 
 const HeaderComp = ({
   onPress1,
@@ -22,15 +23,8 @@ const HeaderComp = ({
 }) => {
   return (
     <>
-      <SafeAreaView style={{backgroundColor: '#FFF'}} />
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingHorizontal: wp(10),
-          backgroundColor: '#FFF',
-          paddingVertical: hp(8),
-        }}>
+      <SafeAreaView style={{backgroundColor: colors.white}} />
+      <View style={styles.headerView}>
         <TouchableOpacity onPress={onPress1}>
           <Image
             style={{
@@ -70,4 +64,12 @@ const HeaderComp = ({
 
 export default HeaderComp;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  headerView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: wp(10),
+    backgroundColor: colors.white,
+    paddingVertical: hp(8),
+  },
+});

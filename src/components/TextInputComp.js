@@ -36,7 +36,6 @@ const TextInputComp = ({
         style={{
           ...commonStyle.text,
           marginBottom: hp(3),
-
           color: colors.lightGray,
         }}>
         {text}

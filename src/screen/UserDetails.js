@@ -75,79 +75,20 @@ const UserDetails = ({navigation}) => {
       </View>
 
       {/* <KeyboardAwareScrollView> */}
-      <View
-        style={{
-          borderWidth: 1,
-          flex: 1,
-
-          paddingHorizontal: 20,
-          margin: 15,
-          borderRadius: 10,
-          borderColor: colors.lightGray,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginVertical: 10,
-          }}>
+      <View style={styles.admissionView}>
+        <View style={styles.firstRow}>
           <View>
-            <Text
-              style={{
-                fontFamily: fonts.regular,
-                fontSize: 15,
-                color: colors.lightGray,
-                paddingVertical: 10,
-              }}>
-              {'Academic Year'}
-            </Text>
-            <Text
-              style={{
-                fontFamily: fonts.regular,
-                fontSize: 15,
-                color: colors.primary.fontColor,
-              }}>
-              {'2020-2023'}
-            </Text>
+            <Text style={styles.headText}>{'Academic Year'}</Text>
+            <Text style={styles.text}>{'2020-2023'}</Text>
           </View>
           <View>
-            <Text
-              style={{
-                fontFamily: fonts.regular,
-                fontSize: 15,
-                color: colors.lightGray,
-                paddingVertical: 10,
-              }}>
-              {'Date of admission'}
-            </Text>
-            <Text
-              style={{
-                fontFamily: fonts.regular,
-                fontSize: 15,
-                color: colors.primary.fontColor,
-              }}>
-              {'1 July,2020'}
-            </Text>
+            <Text style={styles.headText}>{'Date of admission'}</Text>
+            <Text style={styles.text}>{'1 July,2020'}</Text>
           </View>
         </View>
 
-        <Text
-          style={{
-            fontFamily: fonts.regular,
-            fontSize: 15,
-            color: colors.lightGray,
-            paddingVertical: 10,
-          }}>
-          {'Admission number'}
-        </Text>
-        <Text
-          style={{
-            fontFamily: fonts.regular,
-            fontSize: 15,
-            color: colors.primary.fontColor,
-          }}>
-          {'000247'}
-        </Text>
+        <Text style={styles.headText}>{'Admission number'}</Text>
+        <Text style={styles.text}>{'000247'}</Text>
       </View>
 
       <TextComp
@@ -171,9 +112,9 @@ const UserDetails = ({navigation}) => {
       />
       <TextComp
         head1={'Height'}
-        val1={userData?.height}
+        val1={`${userData?.height} Feet`}
         head2={'Weight'}
-        val2={userData?.weight}
+        val2={`${userData?.weight} KG`}
       />
       <TextComp head1={'Roll No'} val1={userData?.rollNo} />
       {/* </KeyboardAwareScrollView> */}
@@ -183,4 +124,31 @@ const UserDetails = ({navigation}) => {
 
 export default UserDetails;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  admissionView: {
+    borderWidth: 1,
+    flex: 1,
+    paddingHorizontal: 20,
+    margin: 15,
+    borderRadius: 10,
+    borderColor: colors.lightGray,
+  },
+
+  firstRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+  },
+
+  headText: {
+    fontFamily: fonts.regular,
+    fontSize: 15,
+    color: colors.lightGray,
+    paddingVertical: 10,
+  },
+  text: {
+    fontFamily: fonts.regular,
+    fontSize: 15,
+    color: colors.primary.fontColor,
+  },
+});

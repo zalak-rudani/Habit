@@ -1,5 +1,12 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
+import React, {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {View, ScrollView, StyleSheet, TextInput} from 'react-native';
 
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
@@ -20,13 +27,13 @@ const StudentRegistration = ({navigation, route}) => {
   const dataForEditing = route?.params?.updatedData;
   console.log('dataForEditing-=-=-=', dataForEditing);
 
-  const [openGender, setOpenGender] = useState(false);
+  const [genderOpen, setGenderOpen] = useState(false);
   const [gender, setGender] = useState('');
   const [genderData, setGenderData] = useState([
     {label: 'Boy', value: 'Boy'},
     {label: 'Girl', value: 'Girl'},
   ]);
-  const [openStd, setOpenStd] = useState(false);
+  const [stdOpen, setStdOpen] = useState(false);
   const [std, setStd] = useState('');
   const [stdData, setStdData] = useState([
     {label: 'LKG', value: 'LKG'},
@@ -44,7 +51,7 @@ const StudentRegistration = ({navigation, route}) => {
     {label: '11th', value: '11th'},
     {label: '12th', value: '12th'},
   ]);
-  const [openDiv, setOpenDiv] = useState(false);
+  const [divOpen, setDivOpen] = useState(false);
   const [div, setDiv] = useState('');
   const [divData, setDivData] = useState([
     {label: 'A', value: 'A'},
@@ -84,22 +91,45 @@ const StudentRegistration = ({navigation, route}) => {
   const genderRef = useRef();
   const rollNoRef = useRef();
 
+  const uniqueId1 = useId();
+  const uniqueId2 = useId();
+  const uniqueId3 = useId();
+
+  const onGenderOpen = useCallback(() => {
+    setStdOpen(false);
+    setDivOpen(false);
+  }, []);
+  const onStdOpen = useCallback(() => {
+    setGenderOpen(false);
+    setDivOpen(false);
+  }, []);
+  const onDivOpen = useCallback(() => {
+    setStdOpen(false);
+    setGenderOpen(false);
+  }, []);
+
+  console.log('fatherNameRef=-=-=-=', fatherNameRef);
+  console.log('uniqueId1-=-=-=-', uniqueId1);
+  console.log('uniqueId2-=-=-=-', uniqueId2);
+  console.log('uniqueId3-=-=-=-', uniqueId3);
+  console.log('onGenderOpen-=-=-=-', onGenderOpen);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (dataForEditing) {
       setAge(dataForEditing?.age);
       setDiv(dataForEditing?.div);
+      setStd(dataForEditing?.std);
+      setName(dataForEditing?.name);
       setEmail(dataForEditing?.email);
-      setFatherName(dataForEditing?.fatherName);
       setGender(dataForEditing?.gender);
       setHeight(dataForEditing?.height);
       setWeight(dataForEditing?.weight);
-      setPhoneNo(dataForEditing?.phoneNo);
-      setName(dataForEditing?.name);
-      setMotherName(dataForEditing?.motherName);
-      setStd(dataForEditing?.std);
       setRollNo(dataForEditing?.rollNo);
+      setPhoneNo(dataForEditing?.phoneNo);
+      setMotherName(dataForEditing?.motherName);
+      setFatherName(dataForEditing?.fatherName);
     }
   }, [dataForEditing]);
 
@@ -247,19 +277,6 @@ const StudentRegistration = ({navigation, route}) => {
     }
   };
 
-  const onGenderOpen = useCallback(() => {
-    setOpenStd(false);
-    setOpenDiv(false);
-  }, []);
-  const onStdOpen = useCallback(() => {
-    setOpenGender(false);
-    setOpenDiv(false);
-  }, []);
-  const onDivOpen = useCallback(() => {
-    setOpenStd(false);
-    setOpenGender(false);
-  }, []);
-
   return (
     <View style={commonStyle.flex1}>
       <HeaderComp
@@ -357,42 +374,42 @@ const StudentRegistration = ({navigation, route}) => {
 
           <DropDownComp
             text={'Gender'}
-            open={openGender}
+            open={genderOpen}
             value={gender}
             items={genderData}
-            setOpen={setOpenGender}
+            setOpen={setGenderOpen}
             setValue={setGender}
             setItems={setGenderData}
             error={genderEr}
-            onOpen={onGenderOpen}
+            onOpen={() => onGenderOpen()}
             zIndex={3000}
             zIndexInverse={1000}
             // onClose={() => stringValidation(gender, setGenderEr, 'Gender')}
           />
           <DropDownComp
             text={'Standard'}
-            open={openStd}
+            open={stdOpen}
             value={std}
             items={stdData}
-            setOpen={setOpenStd}
+            setOpen={setStdOpen}
             setValue={setStd}
             setItems={setStdData}
             error={stdEr}
-            onOpen={onStdOpen()}
+            onOpen={() => onStdOpen()}
             zIndex={2000}
             zIndexInverse={3000}
             // onClose={() => numValidation(std, setStdEr, 'Std')}
           />
           <DropDownComp
             text={'Division'}
-            open={openDiv}
+            open={divOpen}
             value={div}
             items={divData}
-            setOpen={setOpenDiv}
+            setOpen={setDivOpen}
             setValue={setDiv}
             setItems={setDivData}
             error={divEr}
-            onOpen={onDivOpen}
+            onOpen={() => onDivOpen()}
             zIndex={1000}
             zIndexInverse={3000}
             // onClose={() => stringValidation(div, setDivEr, 'Division')}
@@ -408,7 +425,7 @@ const StudentRegistration = ({navigation, route}) => {
             error={rollNoEr}
             onSubmitEditing={() => {
               numValidation(rollNo, setRollNoEr, 'Roll no.');
-              ageRef.current?.focus();
+              ageRef.current.focus();
             }}
             onBlur={() => numValidation(rollNo, setRollNoEr, 'Roll no.')}
             ref={rollNoRef}

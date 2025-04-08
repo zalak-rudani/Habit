@@ -71,7 +71,7 @@ const StandardDetails = ({navigation}) => {
     return {...item, count: sameStdStudent?.length};
   });
 
-  console.log('STDANDARD-=-=-=-=-', standards);
+  console.log('STANDARD-=-=-=-=-', standards);
 
   return (
     <View style={commonStyle.flex1}>

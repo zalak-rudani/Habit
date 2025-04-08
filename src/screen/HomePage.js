@@ -1,4 +1,4 @@
-import React, {useId, useState} from 'react';
+import React, {useContext, useId, useState} from 'react';
 import {
   View,
   Text,
@@ -16,11 +16,16 @@ import icons from '../helper/constants/icons';
 import colors from '../helper/constants/colors';
 import strings from '../helper/constants/strings';
 import commonStyle from '../helper/constants/commonStyle';
+import {UserNameContext} from './LoginPage';
 
 const HomePage = ({navigation}) => {
   const [input, setInput] = useState('');
   const userData = useSelector(state => state?.studentDataSlice?.userDetails);
   console.log('userData-=-=-=-=-=', userData);
+
+  const userName = useContext(UserNameContext);
+
+  console.log('userName-=-=-=--------------------', userName);
 
   const id = useId();
   console.log('id-=-=-=', id);

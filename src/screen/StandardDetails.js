@@ -1,23 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, Image, FlatList, TouchableOpacity} from 'react-native';
-
-import {useDispatch, useSelector} from 'react-redux';
 
 import icons from '../helper/constants/icons';
 import strings from '../helper/constants/strings';
 import HeaderComp from '../components/HeaderComp';
 import commonStyle from '../helper/constants/commonStyle';
-import {removeData} from '../redux/slice/studentDataSlice';
+import StudentContext from '../context/studentDataContext';
 
 const StandardDetails = ({navigation}) => {
-  const stdDetails = useSelector(state => state?.studentDataSlice?.studentData);
+  const {studentData} = useContext(StudentContext);
+
+  const stdDetails = studentData;
   console.log('stdDETAILS*-*-*-*-*-*-*-*-*-', stdDetails);
-
-  const dispatch = useDispatch();
-
-  const deleteData = item => {
-    dispatch(removeData(item));
-  };
 
   const standards = [
     {

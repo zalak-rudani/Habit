@@ -1,5 +1,6 @@
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useId,
   useMemo,
@@ -22,8 +23,11 @@ import DropDownComp from '../components/DropDownComp';
 import TextInputComp from '../components/TextInputComp';
 import commonStyle from '../helper/constants/commonStyle';
 import {addData, updateData} from '../redux/slice/studentDataSlice';
+import StudentContext from '../context/studentDataContext';
 
 const StudentRegistration = ({navigation, route}) => {
+  const {addStudentData, editStudentData} = useContext(StudentContext);
+
   const dataForEditing = route?.params?.updatedData;
   console.log('dataForEditing-=-=-=', dataForEditing);
 
@@ -114,8 +118,6 @@ const StudentRegistration = ({navigation, route}) => {
   console.log('uniqueId3-=-=-=-', uniqueId3);
   console.log('onGenderOpen-=-=-=-', onGenderOpen);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     if (dataForEditing) {
       setAge(dataForEditing?.age);
@@ -149,7 +151,7 @@ const StudentRegistration = ({navigation, route}) => {
       fatherName,
       motherName,
     };
-    dispatch(updateData(editedData));
+    editStudentData(editedData);
     navigation.navigate('StudentsCards', {
       std: std,
       div: div,
@@ -172,7 +174,7 @@ const StudentRegistration = ({navigation, route}) => {
       fatherName,
       motherName,
     };
-    dispatch(addData(newData));
+    addStudentData(newData);
     navigation.navigate('StandardDetails');
   };
 

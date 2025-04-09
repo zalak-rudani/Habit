@@ -1,0 +1,8 @@
+export const ADD_USER_INFO = `ADD_INFO`;
+export const ADD_USER_DETAILS = `DELETE_BLOGPOST`;
+
+export const ADD_STUDENT_DATA = `EDIT_BLOGPOST`;
+export const DELETE_STUDENT_DATA = `EDIT_BLOGPOST`;
+export const UPDATE_STUDENT_DATA = `EDIT_BLOGPOST`;
+
+export const LOGOUT = `EDIT_BLOGPOST`;

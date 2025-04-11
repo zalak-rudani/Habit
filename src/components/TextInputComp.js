@@ -11,6 +11,7 @@ import {
 import {hp} from '../helper/globalFunc';
 import colors from '../helper/constants/colors';
 import commonStyle from '../helper/constants/commonStyle';
+import {fonts} from '../helper/constants/fonts';
 
 const TextInputComp = ({
   ref,
@@ -29,6 +30,8 @@ const TextInputComp = ({
   keyboardType,
   returnKeyType,
   onSubmitEditing,
+  staticPlaceholder,
+  // styleOfTextInput,
 }) => {
   return (
     <View style={{marginVertical: hp(5)}}>
@@ -56,6 +59,13 @@ const TextInputComp = ({
           returnKeyType={returnKeyType}
           onSubmitEditing={onSubmitEditing}
         />
+        <Text
+          style={{
+            fontFamily: fonts.extraLight,
+            color: colors.lightGray,
+          }}>
+          {staticPlaceholder}
+        </Text>
         <TouchableOpacity onPress={onPress}>
           <Image source={source} style={commonStyle.icon} />
         </TouchableOpacity>

@@ -20,6 +20,7 @@ const studentDataSlice = createSlice({
       console.log('action-=-=-=', action.payload);
       state.studentData = [...state.studentData, action.payload];
     },
+
     logOut(state) {
       state.userInfo = {};
       state.studentData = [];

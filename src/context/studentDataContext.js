@@ -17,30 +17,47 @@ const initialState = {
 };
 
 const studentReducer = (state = initialState, action) => {
+  console.log('IDDD outside:::::', action);
   switch (action.type) {
     case ADD_USER_INFO:
-      return (state.userInfo = action?.payload);
+      return {
+        ...state,
+        userInfo: action?.payload,
+      };
 
     case ADD_USER_DETAILS:
-      return (state.userDetails = action?.payload);
+      return {
+        ...state,
+        userDetails: action?.payload,
+      };
 
     case ADD_STUDENT_DATA:
-      return (state.studentData = [...state.studentData, action.payload]);
+      return {
+        ...state,
+        studentData: [...state.studentData, action.payload],
+      };
 
     case DELETE_STUDENT_DATA:
-      return state.studentData?.filter(item => item?.id !== action?.payload);
+      return {
+        ...state,
+        studentData: state.studentData?.filter(
+          item => item?.id !== action?.payload,
+        ),
+      };
 
     case UPDATE_STUDENT_DATA:
-      return state.studentData?.map(item =>
-        item?.id === action?.payload?.id ? action?.payload : item,
-      );
-
+      return {
+        ...state,
+        studentData: state.studentData.map(item =>
+          item.id === action.payload.id ? action.payload : item,
+        ),
+      };
     case LOGOUT:
-      return (
-        (state.userInfo = {}),
-        (state.studentData = []),
-        (state.userDetails = {})
-      );
+      return {
+        userInfo: {},
+        userDetails: {},
+        studentData: [],
+      };
 
     default:
       return state;
@@ -55,19 +72,24 @@ export const StudentDataProvider = ({children}) => {
   };
 
   const addUserDetail = item => {
-    dispatch({type: ADD_USER_INFO, payload: item});
+    dispatch({type: ADD_USER_DETAILS, payload: item});
   };
 
   const addStudentData = item => {
-    dispatch({type: ADD_USER_INFO, payload: item});
+    dispatch({type: ADD_STUDENT_DATA, payload: item});
   };
 
   const deleteStudentData = item => {
-    dispatch({type: ADD_USER_INFO, payload: item?.id});
+    console.log('item id---------', item);
+
+    dispatch({type: DELETE_STUDENT_DATA, payload: item});
   };
 
   const editStudentData = item => {
-    dispatch({type: ADD_USER_INFO, payload: item});
+    dispatch({type: UPDATE_STUDENT_DATA, payload: item});
+  };
+  const logOut = () => {
+    dispatch({type: LOGOUT});
   };
 
   return (
@@ -76,6 +98,7 @@ export const StudentDataProvider = ({children}) => {
         userInfo: state.userInfo,
         userDetails: state.userDetails,
         studentData: state.studentData,
+        logOut,
         addUserInfo,
         addUserDetail,
         addStudentData,

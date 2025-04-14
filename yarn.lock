@@ -1848,6 +1848,14 @@
     redux-thunk "^3.1.0"
     reselect "^5.1.0"
 
+"@sanar/react-native-highlight-text@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@sanar/react-native-highlight-text/-/react-native-highlight-text-1.0.2.tgz#3109442e610095efa647ef49a094d6e143d4b30a"
+  integrity sha512-+mhWujE0YcagtTWHIipSSTAz4ROCmDTLl5MwIL1WtO9ohnMVWPRuZTeqwrJ5kQbSjHZ+/sdZfg1gGU7enNPB4g==
+  dependencies:
+    highlight-words-core "^1.2.0"
+    prop-types "^15.7.2"
+
 "@sideway/address@^4.1.5":
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/@sideway/address/-/address-4.1.5.tgz#4bc149a0076623ced99ca8208ba780d65a99b9d5"
@@ -3892,6 +3900,11 @@ hermes-parser@0.25.1:
   integrity sha512-6pEjquH3rqaI6cYAXYPcz9MS4rY6R4ngRgrgfDshRptUZIc3lw0MCIJIGDj9++mfySOuPTHB4nrSW99BCvOPIA==
   dependencies:
     hermes-estree "0.25.1"
+
+highlight-words-core@^1.2.0:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/highlight-words-core/-/highlight-words-core-1.2.3.tgz#781f37b2a220bf998114e4ef8c8cb6c7a4802ea8"
+  integrity sha512-m1O9HW3/GNHxzSIXWw1wCNXXsgLlxrP0OI6+ycGUhiUHkikqW3OrwVHz+lxeNBe5yqLESdIcj8PowHQ2zLvUvQ==
 
 hoist-non-react-statics@^3.3.0:
   version "3.3.2"

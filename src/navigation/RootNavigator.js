@@ -147,7 +147,14 @@ const RootNavigator = () => {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName={isLoggedIn ? 'HomePage' : 'LoginPage'}>
+        // initialRouteName={isLoggedIn ? 'HomePage' : 'LoginPage'}
+      >
+        <Stack.Screen
+          options={{animation: 'fade'}}
+          name={'HomePage'}
+          component={HomePage}
+        />
+        <Stack.Screen name={'ApiCall'} component={ApiCall} />
         <Stack.Screen
           options={{animation: 'fade'}}
           name={'LoginPage'}
@@ -155,16 +162,11 @@ const RootNavigator = () => {
         />
         <Stack.Screen name={'SignUp'} component={SignUp} />
 
-        <Stack.Screen
-          options={{animation: 'fade'}}
-          name={'HomePage'}
-          component={HomePage}
-        />
         <Stack.Screen name={'UserDetails'} component={UserDetails} />
         <Stack.Screen name={'DivisionDetails'} component={DivisionDetails} />
         <Stack.Screen name={'StandardDetails'} component={StandardDetails} />
         <Stack.Screen name={'StudentDetails'} component={StudentDetails} />
-        <Stack.Screen name={'ApiCall'} component={ApiCall} />
+
         <Stack.Screen name={'StudentsCards'} component={StudentsCards} />
         <Stack.Screen
           name={'StudentRegistration'}

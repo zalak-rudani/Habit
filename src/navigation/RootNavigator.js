@@ -104,6 +104,7 @@ import StudentRegistration from '../screen/StudentRegistration';
 import SignUp from '../screen/SignUp';
 import UserDetails from '../screen/UserDetails';
 import ApiCall from '../screen/ApiCall';
+import ProductsDetailsFromApiCall from '../screen/ProductsDetailsFromApiCall';
 
 const Stack = createStackNavigator();
 
@@ -163,6 +164,10 @@ const RootNavigator = () => {
         <Stack.Screen name={'SignUp'} component={SignUp} />
 
         <Stack.Screen name={'UserDetails'} component={UserDetails} />
+        <Stack.Screen
+          name={'ProductsDetailsFromApiCall'}
+          component={ProductsDetailsFromApiCall}
+        />
         <Stack.Screen name={'DivisionDetails'} component={DivisionDetails} />
         <Stack.Screen name={'StandardDetails'} component={StandardDetails} />
         <Stack.Screen name={'StudentDetails'} component={StudentDetails} />

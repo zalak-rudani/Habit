@@ -22,6 +22,7 @@ export const makeApiCall = async props => {
       params: params,
     };
     console.log('options:::::;;', options);
+    console.log('url:::::;;', url);
 
     if (Object.keys(data)?.length != 0) {
       options.data = data;

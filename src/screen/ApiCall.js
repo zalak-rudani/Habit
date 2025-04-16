@@ -22,54 +22,149 @@ import {getProductsData} from '../../api/axios/actions';
 
 const ApiCall = ({navigation}) => {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchData, setSearchData] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isPaginationLoading, setIsPaginationLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [searchCurrentPage, setSearchCurrentPage] = useState(0);
+
+  console.log('data-=-=-=', data);
+  console.log('isLoadingisLoading-=-=-=', isLoading);
 
   useEffect(() => {
     getProductListData();
-  }, []);
+  }, [searchInput]);
 
-  const nextPage = currentPage + 1;
   const getProductListData = async () => {
-    // setIsPaginationLoading(true);
+    if (!searchInput) {
+      setIsPaginationLoading(true);
+    }
+
+    let paramsObj = searchInput
+      ? {
+          q: searchInput,
+        }
+      : {
+          limit: 10,
+          skip: currentPage * 10,
+        };
+
     try {
       const request = {
         data: {},
+        params: paramsObj,
         onSuccess: async res => {
-          // setIsPaginationLoading(false);
-          setCurrentPage(nextPage);
-          setData([...data, ...res?.products]);
-          setData(res?.products);
-          if (data.length) {
-            setIsLoading(false);
-            return true;
-          } else {
-            setIsLoading(false);
-            return false;
+          console.log('res:::::::::::::::::', res);
+
+          setIsLoading(false);
+
+          {
+            searchInput === ''
+              ? setData([...data, ...res?.products])
+              : setFilteredData(res?.products);
+          }
+
+          if (!searchInput) {
+            setIsPaginationLoading(false);
+            setCurrentPage(currentPage + 1);
           }
         },
         onFail: err => {
           console.log('err::', err);
-          // setIsPaginationLoading(false);
+          setIsLoading(false);
+          setIsPaginationLoading(false);
         },
       };
-      getProductsData({
-        request: request,
-        // params: `?per_page=10&page=${nextPage}`,
-      })
-        .then(res => {
-          console.log('ressssss-=-=-==', res);
-        })
-        .catch(error => {
-          console.log('errrrrrrrrr::', error);
-        });
+      await getProductsData(request);
     } catch (error) {
       console.log('errorerror::', error);
     }
   };
 
+  // const getSearchData = async () => {
+  //   // const searchNextPage = searchCurrentPage + 1;
+  //   // setIsPaginationLoading(true);
+  //   try {
+  //     const request = {
+  //       data: {},
+  //       onSuccess: async res => {
+  //         console.log('searchhhhhhhhh****************', res);
+
+  //         setSearchData([...searchData, ...res?.products]);
+  //         setIsPaginationLoading(false);
+  //         setSearchCurrentPage(searchNextPage);
+  //       },
+  //       onFail: err => {
+  //         console.log('err::', err);
+  //         // setIsPaginationLoading(false);
+  //       },
+  //     };
+  //     getProductsData({
+  //       request: request,
+  //       params: {
+  //         limit: 10,
+  //         skip: searchCurrentPage * 10,
+  //         search: searchInput,
+  //       },
+  //     })
+  //       .then(res => {
+  //         console.log('ressssss-=-=-==', res);
+  //       })
+  //       .catch(error => {
+  //         console.log('errrrrrrrrr::', error);
+  //       });
+  //   } catch (error) {
+  //     console.log('errorerror::', error);
+  //   }
+  // };
+
+  // const filteredData = data?.filter(item => {
+  //   return item?.title?.toLowerCase()?.includes(searchInput?.toLowerCase());
+  // });
+
+  // console.log('filterdata-=-=-=', filteredData);
+
+  const HighlightedText = (text, highlight) => {
+    if (!highlight) return <Text style={styles.productsTitle}>{text}</Text>;
+
+    const regex = new RegExp(`(${highlight})`, 'i');
+    const parts = text.split(regex);
+    // console.log('parts-=-=-=', parts);
+
+    return (
+      <Text style={styles.productsTitle}>
+        {parts.map((item, index) => (
+          <Text
+            key={index}
+            style={
+              item.toLowerCase() === highlight.toLowerCase()
+                ? styles.highlightedText
+                : {}
+            }>
+            {item}
+          </Text>
+        ))}
+      </Text>
+    );
+  };
+
+  const isEmpty = !data && !filteredData;
+  console.log('isEmpty-=-=-=', isEmpty);
+  let contentStyle = {};
+
+  if (searchInput === '') {
+    contentStyle = {};
+  } else if (item?.title?.toLowerCase()?.includes(searchInput?.toLowerCase())) {
+    contentStyle = {};
+  } else {
+    contentStyle = {
+      flex: 1,
+      justifyContent: 'center',
+      backgroundColor: 'red',
+    };
+  }
   return (
     <View
       style={{
@@ -88,7 +183,9 @@ const ApiCall = ({navigation}) => {
             placeholder="Search"
             clearButtonMode="always"
             value={searchInput}
-            onChangeText={text => setSearchInput(text)}
+            onChangeText={text => {
+              setSearchInput(text);
+            }}
           />
         </View>
         {isLoading ? (
@@ -101,212 +198,84 @@ const ApiCall = ({navigation}) => {
             <ActivityIndicator color={'blue'} size={'large'} />
           </View>
         ) : (
-          <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
+          // <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
+          <>
             <FlatList
-              scrollEnabled={false}
-              data={data}
+              // contentContainerStyle={
+              //   searchInput === ''
+              //     ? {}
+              //     : item?.title?.toLowerCase()?.includes(searchInput?.toLowerCase())
+              //     ? {}
+              //     : {
+              //         flex: 1,
+              //         justifyContent: 'center',
+              //         backgroundColor: 'red',
+              //       }
+              // }
+              indicatorStyle="black"
+              contentContainerStyle={contentStyle}
+              scrollEnabled={true}
+              data={searchInput === '' ? data : filteredData}
               renderItem={({item}) => {
-                if (searchInput === '') {
-                  return (
-                    <TouchableOpacity
-                      style={{
-                        backgroundColor: colors.white,
-                        marginVertical: hp(20),
-                        padding: 10,
-                        borderRadius: 15,
-                      }}>
-                      <View
-                        style={{
-                          flex: 1,
-                          flexDirection: 'row',
-                        }}>
-                        <Image
-                          resizeMode="contain"
-                          style={{
-                            height: hp(130),
-                            width: hp(130),
-                            borderWidth: 1,
-                            borderColor: colors.lightGray,
-                            borderRadius: 5,
-                            marginRight: wp(20),
-                            marginBottom: hp(20),
-                          }}
-                          source={{uri: item?.thumbnail}}
-                        />
-                        <View
-                          style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                          }}>
-                          <Text
-                            style={{
-                              fontSize: 20,
-                              fontFamily: fonts.medium,
-                              color: 'black',
-                            }}>
-                            {`# ${item?.id}`}
-                          </Text>
-                          <View
-                            style={{
-                              backgroundColor: colors.primary.backgroundColor,
-                              borderRadius: 5,
-                              padding: 10,
-                              marginTop: 10,
-                              marginBottom: 10,
-                            }}>
-                            <Text
-                              style={{
-                                fontSize: 15,
-                                fontFamily: fonts.medium,
-                                color: 'black',
-                              }}>
-                              {item?.title}
-                            </Text>
-                          </View>
-                          <Text
-                            style={{
-                              fontSize: 20,
-                              fontFamily: fonts.medium,
-                              color: 'black',
-                            }}>
-                            {`Price: $ ${item?.price}`}
-                          </Text>
+                return (
+                  <TouchableOpacity
+                    style={styles.productsCard}
+                    onPress={() =>
+                      navigation.navigate('ProductsDetailsFromApiCall', {
+                        id: item?.id,
+                      })
+                    }>
+                    <View style={styles.directionRow}>
+                      <Image
+                        resizeMode="contain"
+                        style={styles.image}
+                        source={{uri: item?.thumbnail}}
+                      />
+                      <View style={styles.contentCenter}>
+                        <Text style={styles.productsId}>{`# ${item?.id}`}</Text>
+                        <View style={styles.titleView}>
+                          {/* <Text style={styles.productsTitle}>
+                          {item?.title}
+                          </Text> */}
+                          {HighlightedText(item?.title, searchInput)}
                         </View>
-                      </View>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontFamily: fonts.regular,
-                          color: 'black',
-                          marginBottom: 8,
-                        }}>
-                        {'Description :'}
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 15,
-                          fontFamily: fonts.extraLight,
-                          color: 'black',
-                        }}>
-                        {item?.description}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                }
 
-                if (
-                  item?.title
-                    ?.toLowerCase()
-                    ?.includes(searchInput?.toLowerCase())
-                ) {
-                  return (
-                    <View
-                      style={{
-                        backgroundColor: colors.white,
-                        marginVertical: hp(20),
-                        padding: 10,
-                        borderRadius: 15,
-                      }}>
-                      <View
-                        style={{
-                          flex: 1,
-                          flexDirection: 'row',
-                        }}>
-                        <Image
-                          resizeMode="contain"
-                          style={{
-                            height: hp(130),
-                            width: hp(130),
-                            borderWidth: 1,
-                            borderColor: colors.lightGray,
-                            borderRadius: 5,
-                            marginRight: wp(20),
-                            marginBottom: hp(20),
-                          }}
-                          source={{uri: item?.thumbnail}}
-                        />
-                        <View
-                          style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                          }}>
-                          <Text
-                            style={{
-                              fontSize: 20,
-                              fontFamily: fonts.medium,
-                              color: 'black',
-                            }}>
-                            {`# ${item?.id}`}
-                          </Text>
-                          <View
-                            style={{
-                              backgroundColor: colors.primary.backgroundColor,
-                              borderRadius: 5,
-                              padding: 10,
-                              marginTop: 10,
-                              marginBottom: 10,
-                            }}>
-                            <Text
-                              style={{
-                                fontSize: 15,
-                                fontFamily: fonts.medium,
-                                color: 'black',
-                              }}>
-                              {item?.title}
-                            </Text>
-                          </View>
-                          <Text
-                            style={{
-                              fontSize: 20,
-                              fontFamily: fonts.medium,
-                              color: 'black',
-                            }}>
-                            {`Price: $ ${item?.price}`}
-                          </Text>
-                        </View>
+                        <Text style={styles.productsId}>
+                          {`Price: $ ${item?.price}`}
+                        </Text>
                       </View>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontFamily: fonts.regular,
-                          color: 'black',
-                          marginBottom: 8,
-                        }}>
-                        {'Description :'}
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 15,
-                          fontFamily: fonts.extraLight,
-                          color: 'black',
-                        }}>
-                        {item?.description}
-                      </Text>
                     </View>
-                  );
-                }
-
-                if (item === null) {
-                  return (
-                    <View
-                      style={{
-                        backgroundColor: 'red',
-                        height: hp(170),
-                        width: wp(150),
-                      }}>
-                      <Text>{'data not found'}</Text>
-                    </View>
-                  );
-                }
+                    <Text style={styles.productsDescriptionHead}>
+                      {'Description :'}
+                    </Text>
+                    <Text style={styles.productsDescription}>
+                      {item?.description}
+                    </Text>
+                  </TouchableOpacity>
+                );
               }}
+              ListEmptyComponent={
+                <View
+                  style={{
+                    backgroundColor: colors.white,
+                    height: hp(100),
+                    marginHorizontal: wp(50),
+                    borderRadius: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={commonStyle.mediumText}>{'no data found'}</Text>
+                </View>
+              }
               onEndReached={getProductListData}
               onEndReachedThreshold={0.1}
               ListFooterComponent={() => {
                 return (
                   <View
                     style={{
-                      height: hp(100),
-                      width: wp(60),
+                      // height: hp(100),
+                      // width: wp(60),
+                      flex: 1,
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
@@ -317,7 +286,9 @@ const ApiCall = ({navigation}) => {
                 );
               }}
             />
-          </ScrollView>
+          </>
+
+          // </ScrollView>
         )}
       </View>
     </View>
@@ -328,8 +299,8 @@ export default ApiCall;
 
 const styles = StyleSheet.create({
   icon: {
-    height: hp(25),
-    width: hp(25),
+    height: 25,
+    width: 25,
     marginHorizontal: wp(15),
   },
   searchView: {
@@ -341,58 +312,65 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: hp(20),
   },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  productsCard: {
+    backgroundColor: colors.white,
+    marginVertical: hp(20),
+    padding: 10,
+    borderRadius: 15,
+  },
+  directionRow: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  image: {
+    height: hp(130),
+    width: hp(130),
+    borderWidth: 1,
+    borderColor: colors.lightGray,
+    borderRadius: 5,
+    marginRight: wp(20),
+    marginBottom: hp(20),
+  },
+  contentCenter: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  productsId: {
+    fontSize: 20,
+    fontFamily: fonts.medium,
+    color: 'black',
+  },
+  titleView: {
+    backgroundColor: colors.primary.backgroundColor,
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  productsTitle: {
+    fontSize: 15,
+    fontFamily: fonts.medium,
+    color: 'black',
+  },
+  productsDescriptionHead: {
+    fontSize: 20,
+    fontFamily: fonts.regular,
+    color: 'black',
+    marginBottom: 8,
+  },
+  productsDescription: {
+    fontSize: 15,
+    fontFamily: fonts.extraLight,
+    color: 'black',
+  },
+  highlightedText: {
+    fontSize: 15,
+    fontFamily: fonts.medium,
+    color: 'green',
+  },
 });
-
-// const getApiData = async () => {
-//   try {
-//     const response = await axios('https://dummyjson.com/products');
-//     console.log('response-=-=-=-', response.data.products);
-//     setData(response?.data?.products);
-//     if (data.length) {
-//       setIsLoading(false);
-//       return true;
-//     } else {
-//       setIsLoading(false);
-//       return false;
-//     }
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
-
-// const getProductListData = async () => {
-//   setIsPaginationLoading(true);
-//   try {
-//     const request = {
-//       data: {},
-//       onSuccess: async res => {
-//         setIsPaginationLoading(false);
-//         setCurrentPage(nextPage);
-//         setData([...data, ...res?.products]);
-//         if (data.length) {
-//           setIsLoading(false);
-//           return true;
-//         } else {
-//           setIsLoading(false);
-//           return false;
-//         }
-//       },
-//       onFail: err => {
-//         console.log('err::', err);
-//         setIsPaginationLoading(false);
-//       },
-//     };
-//     getProductsData({
-//       request: request,
-//       params: `?per_page=10&page=${nextPage}`,
-//     })
-//       .then(res => {
-//         console.log('ressssss-=-=-==', res);
-//       })
-//       .catch(error => {
-//         console.log('errrrrrrrrr::', error);
-//       });
-//   } catch (error) {
-//     console.log('errorerror::', error);
-//   }
-// };

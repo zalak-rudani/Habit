@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import commonStyle from '../helper/constants/commonStyle';
 import axios from 'axios';
 import {hp, wp} from '../helper/globalFunc';
@@ -19,9 +19,11 @@ import colors from '../helper/constants/colors';
 import {fonts} from '../helper/constants/fonts';
 // import {getApiData} from '../../api/axios/axiosApis';
 import {getProductsData} from '../../api/axios/actions';
+import {debounce} from 'lodash';
 
 const ApiCall = ({navigation}) => {
   const [data, setData] = useState([]);
+  const [selectedItem, setSelectedItem] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [searchData, setSearchData] = useState([]);
   const [searchInput, setSearchInput] = useState('');
@@ -35,7 +37,7 @@ const ApiCall = ({navigation}) => {
 
   useEffect(() => {
     getProductListData();
-  }, [searchInput]);
+  }, []);
 
   const getProductListData = async () => {
     if (!searchInput) {
@@ -83,48 +85,20 @@ const ApiCall = ({navigation}) => {
     }
   };
 
-  // const getSearchData = async () => {
-  //   // const searchNextPage = searchCurrentPage + 1;
-  //   // setIsPaginationLoading(true);
-  //   try {
-  //     const request = {
-  //       data: {},
-  //       onSuccess: async res => {
-  //         console.log('searchhhhhhhhh****************', res);
+  const debouncedGetProductListData = useMemo(
+    () => debounce(getProductListData, 500),
+    [],
+  );
 
-  //         setSearchData([...searchData, ...res?.products]);
-  //         setIsPaginationLoading(false);
-  //         setSearchCurrentPage(searchNextPage);
-  //       },
-  //       onFail: err => {
-  //         console.log('err::', err);
-  //         // setIsPaginationLoading(false);
-  //       },
-  //     };
-  //     getProductsData({
-  //       request: request,
-  //       params: {
-  //         limit: 10,
-  //         skip: searchCurrentPage * 10,
-  //         search: searchInput,
-  //       },
-  //     })
-  //       .then(res => {
-  //         console.log('ressssss-=-=-==', res);
-  //       })
-  //       .catch(error => {
-  //         console.log('errrrrrrrrr::', error);
-  //       });
-  //   } catch (error) {
-  //     console.log('errorerror::', error);
-  //   }
-  // };
+  // const debouncedGetProductListData = debounce(getProductListData, 500);
 
-  // const filteredData = data?.filter(item => {
-  //   return item?.title?.toLowerCase()?.includes(searchInput?.toLowerCase());
-  // });
-
-  // console.log('filterdata-=-=-=', filteredData);
+  const handleSearch = useCallback(
+    async text => {
+      setSearchInput(text);
+      debouncedGetProductListData(text);
+    },
+    [debouncedGetProductListData],
+  );
 
   const HighlightedText = (text, highlight) => {
     if (!highlight) return <Text style={styles.productsTitle}>{text}</Text>;
@@ -150,13 +124,13 @@ const ApiCall = ({navigation}) => {
     );
   };
 
-  const isEmpty = !data && !filteredData;
-  console.log('isEmpty-=-=-=', isEmpty);
   let contentStyle = {};
 
   if (searchInput === '') {
     contentStyle = {};
-  } else if (item?.title?.toLowerCase()?.includes(searchInput?.toLowerCase())) {
+  } else if (
+    selectedItem?.toLowerCase()?.includes(searchInput?.toLowerCase())
+  ) {
     contentStyle = {};
   } else {
     contentStyle = {
@@ -175,7 +149,7 @@ const ApiCall = ({navigation}) => {
         onPress1={() => navigation.goBack()}
         source1={icons.left}
       />
-      <View style={{marginHorizontal: wp(16), flex: 1}}>
+      <View style={{flex: 1}}>
         <View style={styles.searchView}>
           <Image style={styles.icon} source={icons.search} />
           <TextInput
@@ -183,9 +157,8 @@ const ApiCall = ({navigation}) => {
             placeholder="Search"
             clearButtonMode="always"
             value={searchInput}
-            onChangeText={text => {
-              setSearchInput(text);
-            }}
+            onChangeText={text => handleSearch(text)}
+            // onChangeText={text => setSearchInput(text)}
           />
         </View>
         {isLoading ? (
@@ -201,58 +174,75 @@ const ApiCall = ({navigation}) => {
           // <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}>
           <>
             <FlatList
-              // contentContainerStyle={
-              //   searchInput === ''
-              //     ? {}
-              //     : item?.title?.toLowerCase()?.includes(searchInput?.toLowerCase())
-              //     ? {}
-              //     : {
-              //         flex: 1,
-              //         justifyContent: 'center',
-              //         backgroundColor: 'red',
-              //       }
-              // }
+              style={{paddingHorizontal: wp(16)}}
               indicatorStyle="black"
-              contentContainerStyle={contentStyle}
+              // contentContainerStyle={contentStyle}
               scrollEnabled={true}
               data={searchInput === '' ? data : filteredData}
               renderItem={({item}) => {
-                return (
-                  <TouchableOpacity
-                    style={styles.productsCard}
-                    onPress={() =>
-                      navigation.navigate('ProductsDetailsFromApiCall', {
-                        id: item?.id,
-                      })
-                    }>
-                    <View style={styles.directionRow}>
-                      <Image
-                        resizeMode="contain"
-                        style={styles.image}
-                        source={{uri: item?.thumbnail}}
-                      />
-                      <View style={styles.contentCenter}>
-                        <Text style={styles.productsId}>{`# ${item?.id}`}</Text>
+                if (searchInput === '') {
+                  return (
+                    <TouchableOpacity
+                      style={styles.productsCard}
+                      onPress={() =>
+                        navigation.navigate('ProductsDetailsFromApiCall', {
+                          id: item?.id,
+                        })
+                      }>
+                      <View style={styles.directionRow}>
+                        <Image
+                          resizeMode="contain"
+                          style={styles.image}
+                          source={{uri: item?.thumbnail}}
+                        />
+                        <View style={styles.contentCenter}>
+                          <Text
+                            style={styles.productsId}>{`# ${item?.id}`}</Text>
+                          <View style={styles.titleView}>
+                            {/* <Text style={styles.productsTitle}>
+                          {item?.title}
+                          </Text> */}
+                            {HighlightedText(item?.title, searchInput)}
+                          </View>
+
+                          <Text style={styles.productsId}>
+                            {`Price: $ ${item?.price}`}
+                          </Text>
+                        </View>
+                      </View>
+                      <Text style={styles.productsDescriptionHead}>
+                        {'Description :'}
+                      </Text>
+                      <Text style={styles.productsDescription}>
+                        {item?.description}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                } else {
+                  return (
+                    <TouchableOpacity
+                      style={styles.productsCard}
+                      onPress={() =>
+                        navigation.navigate('ProductsDetailsFromApiCall', {
+                          id: item?.id,
+                        })
+                      }>
+                      <View style={styles.directionRow}>
+                        <Image
+                          resizeMode="contain"
+                          style={styles.image}
+                          source={{uri: item?.thumbnail}}
+                        />
                         <View style={styles.titleView}>
                           {/* <Text style={styles.productsTitle}>
                           {item?.title}
                           </Text> */}
                           {HighlightedText(item?.title, searchInput)}
                         </View>
-
-                        <Text style={styles.productsId}>
-                          {`Price: $ ${item?.price}`}
-                        </Text>
                       </View>
-                    </View>
-                    <Text style={styles.productsDescriptionHead}>
-                      {'Description :'}
-                    </Text>
-                    <Text style={styles.productsDescription}>
-                      {item?.description}
-                    </Text>
-                  </TouchableOpacity>
-                );
+                    </TouchableOpacity>
+                  );
+                }
               }}
               ListEmptyComponent={
                 <View
@@ -306,6 +296,7 @@ const styles = StyleSheet.create({
   searchView: {
     height: hp(40),
     // width: wp(350),
+    marginHorizontal: wp(16),
     backgroundColor: colors.white,
     flexDirection: 'row',
     alignItems: 'center',
@@ -318,13 +309,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   productsCard: {
+    // flex: 1,
     backgroundColor: colors.white,
     marginVertical: hp(20),
     padding: 10,
     borderRadius: 15,
   },
   directionRow: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
   },
   image: {
@@ -374,3 +366,46 @@ const styles = StyleSheet.create({
     color: 'green',
   },
 });
+
+// const getSearchData = async () => {
+//   // const searchNextPage = searchCurrentPage + 1;
+//   // setIsPaginationLoading(true);
+//   try {
+//     const request = {
+//       data: {},
+//       onSuccess: async res => {
+//         console.log('searchhhhhhhhh****************', res);
+
+//         setSearchData([...searchData, ...res?.products]);
+//         setIsPaginationLoading(false);
+//         setSearchCurrentPage(searchNextPage);
+//       },
+//       onFail: err => {
+//         console.log('err::', err);
+//         // setIsPaginationLoading(false);
+//       },
+//     };
+//     getProductsData({
+//       request: request,
+//       params: {
+//         limit: 10,
+//         skip: searchCurrentPage * 10,
+//         search: searchInput,
+//       },
+//     })
+//       .then(res => {
+//         console.log('ressssss-=-=-==', res);
+//       })
+//       .catch(error => {
+//         console.log('errrrrrrrrr::', error);
+//       });
+//   } catch (error) {
+//     console.log('errorerror::', error);
+//   }
+// };
+
+// const filteredData = data?.filter(item => {
+//   return item?.title?.toLowerCase()?.includes(searchInput?.toLowerCase());
+// });
+
+// console.log('filterdata-=-=-=', filteredData);

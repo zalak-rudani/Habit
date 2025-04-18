@@ -369,6 +369,7 @@ const StudentRegistration = ({navigation, route}) => {
           <TextInputComp
             styleOfTextInput={commonStyle.textInput}
             text={'Email'}
+            autoCapitalize={'none'}
             value={email}
             onChangeText={text => {
               setEmail(text);

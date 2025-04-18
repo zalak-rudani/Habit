@@ -28,6 +28,7 @@ const TextInputComp = ({
   placeholder,
   onChangeText,
   keyboardType,
+  autoCapitalize,
   returnKeyType,
   onSubmitEditing,
   staticPlaceholder,
@@ -58,6 +59,7 @@ const TextInputComp = ({
           style={commonStyle.textInput}
           returnKeyType={returnKeyType}
           onSubmitEditing={onSubmitEditing}
+          autoCapitalize={autoCapitalize}
         />
         <Text
           style={{

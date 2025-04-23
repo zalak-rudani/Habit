@@ -1,6 +1,14 @@
 // *** // using the concept of redux toolkit
 
-import React, {useContext, useId, useState} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   View,
   Text,
@@ -20,9 +28,27 @@ import icons from '../helper/constants/icons';
 import colors from '../helper/constants/colors';
 import strings from '../helper/constants/strings';
 import commonStyle from '../helper/constants/commonStyle';
+import ButtonComp from '../components/ButtonComp';
+import UseCallbackComp from '../components/UseCallbackComp';
+
+const num = new Array(2000).fill(0).map((_, i) => {
+  return {
+    index: i,
+    isFind: i === 200,
+  };
+});
 
 const HomePage = ({navigation}) => {
   const [input, setInput] = useState('');
+  const [add, setAdd] = useState(0);
+  const [number, setNumber] = useState(num);
+
+  // const find = number.find(item => {
+  //   console.log('find func called');
+
+  //   item.isFind === true;
+  // });
+
   const userData = useSelector(state => state?.studentDataSlice?.userDetails);
   console.log('userData-=-=-=-=-=', userData);
 
@@ -33,6 +59,49 @@ const HomePage = ({navigation}) => {
     state => state?.studentDataSlice?.studentData,
   );
   console.log('studentDataName-=-=-=-=-=', studentData);
+
+  const handleAdd = useCallback(() => {
+    setAdd(prevCount => prevCount + 1);
+  }, [add]);
+  console.log('add-=-=-=', add);
+
+  const prevFunc = useRef(null);
+
+  // const calculation = useCallback(() => {
+  //   console.log('Running calculation....');
+  //   let result = 0;
+  //   for (let i = 0; i < 10000; i++) {
+  //     result += i;
+  //   }
+  //   return result;
+  // }, [add]);
+
+  const calculation = useMemo(() => {
+    console.log('Running calculation....');
+    let result = 0;
+    for (let i = 0; i < 10000; i++) {
+      result += i;
+    }
+    return result;
+  }, [add]);
+
+  console.log(
+    'prevFunc.current === calculation',
+    prevFunc.current === calculation,
+  );
+  console.log('prevFunc.current', prevFunc.current);
+
+  useEffect(() => {
+    if (prevFunc.current === null) {
+      prevFunc.current === calculation;
+    } else {
+      if (prevFunc.current === calculation) {
+        console.log('func not re-created');
+      } else {
+        console.log('func got re-created');
+      }
+    }
+  }, [calculation]);
 
   return (
     <View style={[commonStyle.flex1]}>
@@ -119,6 +188,10 @@ const HomePage = ({navigation}) => {
         title="Next Screen"
         onPress={() => navigation.navigate('ApiCall')}
       />
+      <Button title="button" onPress={handleAdd} />
+      <UseCallbackComp text={add} onPress={handleAdd} />
+      <Text>Expensive calculation : {calculation}</Text>
+      {/* <Text>Expensive calculation 2 : {find.index}</Text> */}
     </View>
   );
 };

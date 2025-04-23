@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Button,
   FlatList,
   Image,
   ScrollView,
@@ -9,7 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import commonStyle from '../helper/constants/commonStyle';
 import axios from 'axios';
 import {hp, wp} from '../helper/globalFunc';
@@ -18,7 +19,7 @@ import icons from '../helper/constants/icons';
 import colors from '../helper/constants/colors';
 import {fonts} from '../helper/constants/fonts';
 // import {getApiData} from '../../api/axios/axiosApis';
-import {getProductsData} from '../../api/axios/actions';
+import {getProductsData, postProductsData} from '../../api/axios/actions';
 import {debounce} from 'lodash';
 
 const ApiCall = ({navigation}) => {
@@ -27,23 +28,25 @@ const ApiCall = ({navigation}) => {
   const [filteredData, setFilteredData] = useState([]);
   const [searchData, setSearchData] = useState([]);
   const [searchInput, setSearchInput] = useState('');
+  const [dSearchInput, setDsearchInput] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isPaginationLoading, setIsPaginationLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchCurrentPage, setSearchCurrentPage] = useState(0);
 
+  console.log('filteredData-=-=-=', filteredData);
   console.log('data-=-=-=', data);
   console.log('isLoadingisLoading-=-=-=', isLoading);
 
   useEffect(() => {
     getProductListData();
-  }, []);
+    postProductListData();
+  }, [dSearchInput]);
 
-  const getProductListData = async () => {
+  const postProductListData = async () => {
     if (!searchInput) {
       setIsPaginationLoading(true);
     }
-
     let paramsObj = searchInput
       ? {
           q: searchInput,
@@ -52,22 +55,59 @@ const ApiCall = ({navigation}) => {
           limit: 10,
           skip: currentPage * 10,
         };
+    try {
+      const request = {
+        data: {id: 199, title: 'Aaaaaaaaaaaaaa'},
+        params: paramsObj,
+        onSuccess: async res => {
+          console.log('postRes-=-=-=-=-', res);
+          setIsLoading(false);
+          {
+            searchInput === ''
+              ? setData([...data, ...res?.products])
+              : setFilteredData(res?.products);
+          }
+          if (!searchInput) {
+            setIsPaginationLoading(false);
+            setCurrentPage(currentPage + 1);
+          }
+        },
+        onFail: err => {
+          console.log('postReserr::', err);
+          setIsLoading(false);
+          setIsPaginationLoading(false);
+        },
+      };
+      await postProductsData(request);
+    } catch (error) {
+      console.log('postReserrorerror::', error);
+    }
+  };
 
+  const getProductListData = async () => {
+    if (!searchInput) {
+      setIsPaginationLoading(true);
+    }
+    let paramsObj = searchInput
+      ? {
+          q: searchInput,
+        }
+      : {
+          limit: 10,
+          skip: currentPage * 10,
+        };
     try {
       const request = {
         data: {},
         params: paramsObj,
         onSuccess: async res => {
           console.log('res:::::::::::::::::', res);
-
           setIsLoading(false);
-
           {
             searchInput === ''
               ? setData([...data, ...res?.products])
               : setFilteredData(res?.products);
           }
-
           if (!searchInput) {
             setIsPaginationLoading(false);
             setCurrentPage(currentPage + 1);
@@ -85,20 +125,31 @@ const ApiCall = ({navigation}) => {
     }
   };
 
-  const debouncedGetProductListData = useMemo(
-    () => debounce(getProductListData, 500),
+  // const debouncedGetProductListData = useMemo(
+  //   () => debounce(getProductListData, 1000),
+  //   [],
+  // );
+
+  // const debouncedGetProductListData = useCallback(text =>
+  //   debounce(setDsearchInput(text), 2000),[]);
+
+  const debounceHandler = useCallback(
+    debounce(text => {
+      {
+        console.log('debounce-=-=-=-=');
+      }
+      setDsearchInput(text);
+    }, 5000),
     [],
   );
 
-  // const debouncedGetProductListData = debounce(getProductListData, 500);
-
-  const handleSearch = useCallback(
-    async text => {
-      setSearchInput(text);
-      debouncedGetProductListData(text);
-    },
-    [debouncedGetProductListData],
-  );
+  const handleSearch = text => {
+    setSearchInput(text);
+    debounceHandler(text);
+    // debounce(text => {
+    //   setDsearchInput(text);
+    // }, 5000);
+  };
 
   const HighlightedText = (text, highlight) => {
     if (!highlight) return <Text style={styles.productsTitle}>{text}</Text>;
@@ -161,6 +212,8 @@ const ApiCall = ({navigation}) => {
             // onChangeText={text => setSearchInput(text)}
           />
         </View>
+        {/* <Button title="button" onPress={filter} /> */}
+
         {isLoading ? (
           <View
             style={{
@@ -180,69 +233,68 @@ const ApiCall = ({navigation}) => {
               scrollEnabled={true}
               data={searchInput === '' ? data : filteredData}
               renderItem={({item}) => {
-                if (searchInput === '') {
-                  return (
-                    <TouchableOpacity
-                      style={styles.productsCard}
-                      onPress={() =>
-                        navigation.navigate('ProductsDetailsFromApiCall', {
-                          id: item?.id,
-                        })
-                      }>
-                      <View style={styles.directionRow}>
-                        <Image
-                          resizeMode="contain"
-                          style={styles.image}
-                          source={{uri: item?.thumbnail}}
-                        />
-                        <View style={styles.contentCenter}>
-                          <Text
-                            style={styles.productsId}>{`# ${item?.id}`}</Text>
-                          <View style={styles.titleView}>
-                            {/* <Text style={styles.productsTitle}>
-                          {item?.title}
-                          </Text> */}
-                            {HighlightedText(item?.title, searchInput)}
-                          </View>
-
-                          <Text style={styles.productsId}>
-                            {`Price: $ ${item?.price}`}
-                          </Text>
-                        </View>
-                      </View>
-                      <Text style={styles.productsDescriptionHead}>
-                        {'Description :'}
-                      </Text>
-                      <Text style={styles.productsDescription}>
-                        {item?.description}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                } else {
-                  return (
-                    <TouchableOpacity
-                      style={styles.productsCard}
-                      onPress={() =>
-                        navigation.navigate('ProductsDetailsFromApiCall', {
-                          id: item?.id,
-                        })
-                      }>
-                      <View style={styles.directionRow}>
-                        <Image
-                          resizeMode="contain"
-                          style={styles.image}
-                          source={{uri: item?.thumbnail}}
-                        />
+                // if (searchInput === '') {
+                return (
+                  <TouchableOpacity
+                    style={styles.productsCard}
+                    onPress={() =>
+                      navigation.navigate('ProductsDetailsFromApiCall', {
+                        id: item?.id,
+                      })
+                    }>
+                    <View style={styles.directionRow}>
+                      <Image
+                        resizeMode="contain"
+                        style={styles.image}
+                        source={{uri: item?.thumbnail}}
+                      />
+                      <View style={styles.contentCenter}>
+                        <Text style={styles.productsId}>{`# ${item?.id}`}</Text>
                         <View style={styles.titleView}>
                           {/* <Text style={styles.productsTitle}>
                           {item?.title}
                           </Text> */}
                           {HighlightedText(item?.title, searchInput)}
                         </View>
+
+                        <Text style={styles.productsId}>
+                          {`Price: $ ${item?.price}`}
+                        </Text>
                       </View>
-                    </TouchableOpacity>
-                  );
-                }
+                    </View>
+                    <Text style={styles.productsDescriptionHead}>
+                      {'Description :'}
+                    </Text>
+
+                    <Text style={styles.productsDescription}>
+                      {HighlightedText(item?.description, searchInput)}
+                      {/* {item?.description} */}
+                    </Text>
+                  </TouchableOpacity>
+                );
+                // } else {
+                //   return (
+                //     <TouchableOpacity
+                //       style={styles.productsCard}
+                //       onPress={() =>
+                //         navigation.navigate('ProductsDetailsFromApiCall', {
+                //           id: item?.id,
+                //         })
+                //       }>
+                //       {/* <View style={styles.directionRow}> */}
+                //       {/* <Image
+                //           resizeMode="contain"
+                //           style={styles.image}
+                //           source={{uri: item?.thumbnail}}
+                //         /> */}
+                //       <View style={styles.titleView}>
+                //         <Text style={styles.productsTitle}>{item?.id}</Text>
+                //         {HighlightedText(item?.title, searchInput)}
+                //       </View>
+                //       {/* </View> */}
+                //     </TouchableOpacity>
+                //   );
+                // }
               }}
               ListEmptyComponent={
                 <View
@@ -257,7 +309,7 @@ const ApiCall = ({navigation}) => {
                   <Text style={commonStyle.mediumText}>{'no data found'}</Text>
                 </View>
               }
-              onEndReached={getProductListData}
+              onEndReached={() => getProductListData()}
               onEndReachedThreshold={0.1}
               ListFooterComponent={() => {
                 return (
@@ -409,3 +461,18 @@ const styles = StyleSheet.create({
 // });
 
 // console.log('filterdata-=-=-=', filteredData);
+
+// const debouncedGetProductListData = useMemo(
+//   () => debounce(getProductListData, 500),
+//   [],
+// );
+
+// const debouncedGetProductListData = () => debounce(getProductListData, 2000);
+
+// const handleSearch = useCallback(
+//   async text => {
+//     setSearchInput(text);
+//     debouncedGetProductListData(text);
+//   },
+//   [debouncedGetProductListData],
+// );

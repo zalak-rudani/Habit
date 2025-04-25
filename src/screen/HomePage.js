@@ -188,9 +188,9 @@ const HomePage = ({navigation}) => {
         title="Next Screen"
         onPress={() => navigation.navigate('ApiCall')}
       />
-      <Button title="button" onPress={handleAdd} />
+      {/* <Button title="button" onPress={handleAdd} />
       <UseCallbackComp text={add} onPress={handleAdd} />
-      <Text>Expensive calculation : {calculation}</Text>
+      <Text>Expensive calculation : {calculation}</Text> */}
       {/* <Text>Expensive calculation 2 : {find.index}</Text> */}
     </View>
   );

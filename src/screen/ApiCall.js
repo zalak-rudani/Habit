@@ -3,6 +3,7 @@ import {
   Button,
   FlatList,
   Image,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -19,7 +20,13 @@ import icons from '../helper/constants/icons';
 import colors from '../helper/constants/colors';
 import {fonts} from '../helper/constants/fonts';
 // import {getApiData} from '../../api/axios/axiosApis';
-import {getProductsData, postProductsData} from '../../api/axios/actions';
+import {
+  deleteProductsData,
+  getProductsData,
+  patchProductsData,
+  postProductsData,
+  putProductsData,
+} from '../../api/axios/actions';
 import {debounce} from 'lodash';
 
 const ApiCall = ({navigation}) => {
@@ -32,7 +39,9 @@ const ApiCall = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isPaginationLoading, setIsPaginationLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [searchCurrentPage, setSearchCurrentPage] = useState(0);
+  const [patchPress, setPatchPress] = useState(false);
+  const [putPress, setPutPress] = useState(false);
+  const [deletePress, setDeletePress] = useState(false);
 
   console.log('filteredData-=-=-=', filteredData);
   console.log('data-=-=-=', data);
@@ -40,49 +49,86 @@ const ApiCall = ({navigation}) => {
 
   useEffect(() => {
     getProductListData();
-    postProductListData();
   }, [dSearchInput]);
 
   const postProductListData = async () => {
-    if (!searchInput) {
-      setIsPaginationLoading(true);
-    }
-    let paramsObj = searchInput
-      ? {
-          q: searchInput,
-        }
-      : {
-          limit: 10,
-          skip: currentPage * 10,
-        };
-    try {
-      const request = {
-        data: {id: 199, title: 'Aaaaaaaaaaaaaa'},
-        params: paramsObj,
-        onSuccess: async res => {
-          console.log('postRes-=-=-=-=-', res);
-          setIsLoading(false);
-          {
-            searchInput === ''
-              ? setData([...data, ...res?.products])
-              : setFilteredData(res?.products);
-          }
-          if (!searchInput) {
-            setIsPaginationLoading(false);
-            setCurrentPage(currentPage + 1);
-          }
-        },
-        onFail: err => {
-          console.log('postReserr::', err);
-          setIsLoading(false);
-          setIsPaginationLoading(false);
-        },
-      };
-      await postProductsData(request);
-    } catch (error) {
-      console.log('postReserrorerror::', error);
-    }
+    const request = {
+      data: {
+        id: Date.now(),
+        title: 'post a new product',
+        description: 'description of new product',
+        price: 100,
+      },
+      params: {},
+      onSuccess: res => {
+        console.log('post success:', res);
+        setData(prev => [res, ...prev]);
+      },
+      onFail: err => console.log('post error', err),
+    };
+    await postProductsData(request);
   };
+
+  //PUT sends the entire updated resource in the request body
+  const putProductListData = useCallback(
+    async id => {
+      const updatedData = {
+        title: 'Updated Product',
+      };
+      const request = {
+        data: updatedData,
+        params: {id},
+        onSuccess: res => {
+          console.log('putsucces=-=-=-', res);
+          setData(prev =>
+            prev.map(item => (item.id === id ? {...item, ...res} : item)),
+          );
+        },
+        onFail: err => console.log('put error-=-=-=-', err),
+      };
+      await putProductsData(request);
+    },
+    [putPress],
+  );
+
+  // PATCH only sends the changes to be made
+  const patchProductListData = useCallback(
+    async id => {
+      const updatedData = {
+        // title: 'Updated Product',
+        description: 'Updated using patch',
+        // price: 145,
+      };
+      const request = {
+        data: updatedData,
+        params: {id},
+        onSuccess: res => {
+          console.log('patchsucces=-=-=-', res);
+          setData(prev =>
+            prev.map(item => (item.id === id ? {...item, ...res} : item)),
+          );
+        },
+        onFail: err => console.log('patch error-=-=-=-', err),
+      };
+      await patchProductsData(request);
+    },
+    [patchPress],
+  );
+
+  const deleteProductListData = useCallback(
+    async id => {
+      const request = {
+        params: {id},
+        onSuccess: res => {
+          console.log('delete success:', res);
+          setData(prev => prev.filter(product => product.id !== id));
+        },
+        onFail: err => console.log('delete error:', err),
+      };
+      await deleteProductsData(request);
+    },
+    [deletePress],
+  );
 
   const getProductListData = async () => {
     if (!searchInput) {
@@ -248,6 +294,7 @@ const ApiCall = ({navigation}) => {
                         style={styles.image}
                         source={{uri: item?.thumbnail}}
                       />
+
                       <View style={styles.contentCenter}>
                         <Text style={styles.productsId}>{`# ${item?.id}`}</Text>
                         <View style={styles.titleView}>
@@ -260,6 +307,29 @@ const ApiCall = ({navigation}) => {
                         <Text style={styles.productsId}>
                           {`Price: $ ${item?.price}`}
                         </Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            deleteProductListData(item?.id);
+                            setDeletePress(true);
+                          }}>
+                          <Image
+                            resizeMode="contain"
+                            style={commonStyle.icon}
+                            source={icons.delete}
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            putProductListData(item?.id), setPutPress(true);
+                          }}>
+                          <Text>{'PUT'}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            patchProductListData(item?.id), setPatchPress(true);
+                          }}>
+                          <Text>{'PATCH'}</Text>
+                        </TouchableOpacity>
                       </View>
                     </View>
                     <Text style={styles.productsDescriptionHead}>
@@ -328,6 +398,9 @@ const ApiCall = ({navigation}) => {
                 );
               }}
             />
+            <TouchableOpacity onPress={postProductListData}>
+              <Text>{'+ Add Product (POST)'}</Text>
+            </TouchableOpacity>
           </>
 
           // </ScrollView>
@@ -379,6 +452,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginRight: wp(20),
     marginBottom: hp(20),
+    // justifyContent: 'space-between',
   },
   contentCenter: {
     flex: 1,
@@ -476,3 +550,10 @@ const styles = StyleSheet.create({
 //   },
 //   [debouncedGetProductListData],
 // );
+
+/*.
+.
+.
+.
+.
+.*/

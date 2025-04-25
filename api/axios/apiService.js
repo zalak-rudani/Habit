@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {Platform} from 'react-native';
 
 export const makeApiCall = async props => {
   console.log('props::', props);
@@ -30,6 +31,7 @@ export const makeApiCall = async props => {
 
     axios(options)
       .then(response => {
+        console.log('response:============', response?.data);
         console.log('response:============', response);
 
         if (response.status === 200 || response.status === 201) {

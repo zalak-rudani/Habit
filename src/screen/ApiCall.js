@@ -118,7 +118,7 @@ const ApiCall = ({navigation}) => {
   const deleteProductListData = useCallback(
     async id => {
       const request = {
-        params: {id},
+        params: {},
         onSuccess: res => {
           console.log('delete success:', res);
           setData(prev => prev.filter(product => product.id !== id));

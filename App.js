@@ -1,21 +1,3 @@
-// **** // using concept of 'useReducer' & 'useContext' hook
-
-// import React from 'react';
-
-// import RootNavigator from './src/navigation/RootNavigator';
-
-// import {StudentDataProvider} from './src/context/studentDataContext';
-
-// export const App = () => {
-//   return (
-//     <StudentDataProvider>
-//       <RootNavigator />;
-//     </StudentDataProvider>
-//   );
-// };
-
-// export default App;
-
 // **** // using concept of redux toolkit
 
 import React, {createContext, useContext, useState} from 'react';
@@ -44,3 +26,21 @@ export const App = () => {
 };
 
 export default App;
+
+// **** // using concept of 'useReducer' & 'useContext' hook
+
+// import React from 'react';
+
+// import RootNavigator from './src/navigation/RootNavigator';
+
+// import {StudentDataProvider} from './src/context/studentDataContext';
+
+// export const App = () => {
+//   return (
+//     <StudentDataProvider>
+//       <RootNavigator />;
+//     </StudentDataProvider>
+//   );s
+// };
+
+// export default App;
